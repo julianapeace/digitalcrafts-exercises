@@ -8,6 +8,7 @@ exercise1()
 def exercise2():
     name = (input ("What is your name?")).upper()
     print ("Hello".upper(), name)
+    print ("Your name has {} letters in it! awesome!".upper().format(len(name)))
 exercise2()
 
 def exercise3():
