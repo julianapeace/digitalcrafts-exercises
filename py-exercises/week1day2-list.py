@@ -72,5 +72,6 @@ numbers = [1,2,3,3,2,2,1,5]
 dedup(numbers)
 
 #bonus: matrix multiplication
-for i in range(len(matrix1)):
-    for j in range(len(matrix1[i])):
+for i in range(2):
+    for j in range(2):
+        print (matrix1[i][j], matrix2[i][j])
