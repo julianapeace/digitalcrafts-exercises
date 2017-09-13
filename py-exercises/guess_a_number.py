@@ -7,7 +7,7 @@ def guess_a_number():
         print ("Nope, try again.")
     print("Yes! You win!")
 
-guess_a_number()
+# guess_a_number()
 
 #Give High-Low Hint
 def guess_a_number2():
@@ -17,9 +17,9 @@ def guess_a_number2():
         guess = int(input("I am thinking of a number between 1 and 10. What's the number?"))
         if guess > secret_number:
             print(guess, "is too high.")
-        else:
+        elif guess < secret_number:
             print(guess, "is too low.")
-    print("Yes! You win!")
+    print(secret_number, "Yes! You win!")
 
 guess_a_number2()
 
@@ -36,7 +36,7 @@ def guess_a_random_number():
             print(guess, "is too low.")
     print("Yes! It is",secret_number,"You win!")
 
-guess_a_random_number()
+# guess_a_random_number()
 
 #Limit number of guesses
 def guess_a_random_number_limit():
@@ -58,7 +58,7 @@ def guess_a_random_number_limit():
 
     print("You ran out of guesses!")
 
-guess_a_random_number_limit()
+# guess_a_random_number_limit()
 
 #Bonus round
 def guess_a_random_number_limit_bonus():
@@ -83,4 +83,4 @@ def guess_a_random_number_limit_bonus():
 
     print("You ran out of guesses!")
 
-guess_a_random_number_limit_bonus()
+# guess_a_random_number_limit_bonus()
