@@ -77,7 +77,7 @@ def banner():
             print ("*"*width)
         else:
             print("*"+sentence+"*")
-# banner()
+banner()
 
 #Bonus: Triangle numbers
 def trianglenum():
