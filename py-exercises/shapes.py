@@ -19,14 +19,14 @@ def drawpent():
         forward(100)
         right(72)
     end_fill()
-drawpent()
+# drawpent()
 
 def drawhex():
     for i in range(6):
         pensize(5) #line weight
         forward(100)
         right(60)
-# drawhex()
+drawhex()
 
 def drawoct():
     for i in range(8):
