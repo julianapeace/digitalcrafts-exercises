@@ -64,7 +64,7 @@ def additionmatrix(x,y):
 
 matrix1 = [[2,-2],[5,3]]
 matrix2 = [[6,5], [4,3]]
-additionmatrix(matrix1, matrix2)
+# additionmatrix(matrix1, matrix2)
 
 #de-dup, remove duplicates from a lists
 def dedup(n):
@@ -77,9 +77,13 @@ numbers = [1,2,3,3,2,2,1,5]
 # dedup(numbers)
 
 #bonus: matrix multiplication
-for i in range(2):
-    for j in range(2):
-        print (matrix1[i][j], matrix2[i][j])
+answer = []
+for i in range(0, len(matrix1)):
+    row = matrix1[i]
+    for j in range(0, len(row)):
+        ans = matrix1[i][j] + matrix2[i][j]
+        answer.append(ans)
+print (answer)
 
 
 
@@ -88,4 +92,4 @@ for i in range(2):
 
 
 
-print("ahmer is awesome")
+# print("ahmer is awesome")
