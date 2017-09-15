@@ -1,5 +1,6 @@
 from turtle import *
 
+ontimer(None,2000)
 speed("fastest")
 up()
 goto(-300,-300)
@@ -196,4 +197,5 @@ begin_fill()
 triangle(x)
 end_fill()
 
+clearscreen()
 mainloop()
