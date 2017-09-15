@@ -42,8 +42,21 @@ def primefactors(x):
     for i in range(2,x):
         if x % i == 0:
             primelist.append(i)
-    # print(max(primelist))
-    print(primelist)
+    print(max(primelist))
+    # print(primelist)
 
 # primefactors(13195)
-primefactors(600851475143)
+# primefactors(600851475143)
+
+def primeit(x):
+    primelist = []
+    for i in range(2,x):
+        if x % i == 0:
+            primelist.append(i)
+    return len(primelist)
+
+primes = []
+for i in range (1,21):
+    if primeit(i) == 0:
+        primes.append(i)
+print(primes[6])
