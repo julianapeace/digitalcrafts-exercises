@@ -82,5 +82,5 @@ while i > 0 and i < 30:
         if i % x == 0:
             i = i + 1
     primelist.append(i)
-
+#git test
 print (primelist)
