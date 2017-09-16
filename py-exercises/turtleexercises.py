@@ -20,6 +20,12 @@ def nightsky():
         goto(x,y)
         down()
         drawstar(size)
-nightsky()
+# nightsky()
+
+turtle.mode('logo')
+x,y = turtle.pos()
+# while:
+forward(40)
+
 
 mainloop()
