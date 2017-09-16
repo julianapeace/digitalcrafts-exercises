@@ -22,10 +22,4 @@ def nightsky():
         drawstar(size)
 # nightsky()
 
-turtle.mode('logo')
-x,y = turtle.pos()
-# while:
-forward(40)
-
-
 mainloop()
