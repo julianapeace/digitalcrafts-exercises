@@ -14,7 +14,6 @@ def drawstar(x):
 
 def nightsky():
     bgcolor('#000080')
-    bgpic("1.jpg")
     for i in range(20):
         x = random.randint(-300,300)
         y = random.randint(-300,300)
@@ -41,7 +40,7 @@ def nightsky2():
     for i in range(40):
         x = random.randint(-300,300)
         y = random.randint(-300,300)
-        size = random.randint(5,25)
+        size = random.randint(5,20)
         up()
         goto(x,y)
         down()
