@@ -1,5 +1,5 @@
 class Person:
-    def __init__(self, name, email, phone, friends=None, unique_people_greeted = 0):
+    def __init__(self, name, email, phone, friends=None):
         self.name = name
         self.email = email
         self.phone = phone
