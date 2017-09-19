@@ -2,7 +2,7 @@ import matplotlib.pyplot as plot
 
 def hello(name):
     print("Hello", name)
-# hello(julie)
+# hello('julie')
 
 def func1(x):
     return (x + 1)
