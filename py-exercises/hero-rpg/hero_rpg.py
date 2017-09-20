@@ -52,7 +52,7 @@ def main():
     while goblin.alive() and hero.alive():
         hero.print_status()
         goblin.print_status()
-        zombie.print_status()
+        # zombie.print_status()
         print()
         print("What do you want to do?")
         print("1. fight goblin")
