@@ -12,10 +12,11 @@ zombie = Zombie()
 
 #Who are you?
 you = hero
-enemy = zombie
+enemy = goblin
 
 def main():
     counter = 0
+    coincount = 0
     while enemy.alive() and you.alive():
         you.print_status()
         enemy.print_status()
@@ -47,6 +48,8 @@ def main():
             if isinstance(you, Medic):
                 enemy.attack(you)
                 you.heal()
+            # elif isinstance(you,Hero):
+            #     enemy.attack(you)
             elif isinstance(you, Shadow):
                 if counter < 10:
                     counter += 1
@@ -59,5 +62,7 @@ def main():
                 enemy.attack(you)
         else:
             enemy.attack(you)
+
+    # print("{} looted the {}'s corpse and found {} coins.".format(hero.name, enemy.name, enemy.coincount))
 
 main()
