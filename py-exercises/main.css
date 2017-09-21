@@ -1,0 +1,28 @@
+body{
+  font-family: monospace, sans-serif;
+}
+
+h1{
+  color: red;
+}
+
+a {
+  color: red;
+  border: 1px solid #ccc;
+  font-family: monospace;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+p{
+  margin:10px;
+  font-size:20px;
+}
+
+ul.main-list > li{
+  color:red;
+}
+
+ol > li:last-child{
+  color: blue;
+}
