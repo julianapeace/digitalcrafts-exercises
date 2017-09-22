@@ -70,13 +70,15 @@ def emojitriangle(n):
         x = random.randint(0, len(emojilist)-1)
         print((emojilist[x]*counter).center(n*3, ' '))
         counter = counter + 2
-# emojitriangle(10)
+# emojitriangle(5)
 
 #infinite loop of emojis! Beware!
 def infiniteemoji():
     ans = str(input("type j for a random emoji. q to quit. "))
+    infiniteemojilist = []
     while ans != "q":
         if ans == "j":
             x = random.randint(0, len(emojilist)-1)
-            print(emojilist[x])
+            infiniteemojilist.append(emojilist[x])
+            print (infiniteemojilist)
 # infiniteemoji()
