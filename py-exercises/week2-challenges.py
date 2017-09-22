@@ -7,8 +7,8 @@ def collatz(n):
         elif n % 2 == 1:
             n = n*3 +1
         print('Collatz Sequence: {} \n'.format(n))
-
 # collatz(200)
+
 def isPal(n):
     n = str(n)
     if n[:] == n[::-1]:
@@ -16,8 +16,6 @@ def isPal(n):
 
 def palnum(n):#could be solved with math or programming way by manipulating strings
     #find if palindrome
-
-
 
 palnum(9009)
 
