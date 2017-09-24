@@ -14,10 +14,20 @@ def isPal(n):
     if n[:] == n[::-1]:
         return True
 
-def palnum(n):#could be solved with math or programming way by manipulating strings
-    #find if palindrome
-
-palnum(9009)
+def palnum():#could be solved with math or programming way by manipulating strings
+    pallist = []
+    pallistx = []
+    pallisty = []
+    for i in range(1000):
+        for j in range (1000):
+            ans = i * j
+            if isPal(ans):
+                pallist.append(ans)
+                pallistx.append(i)
+                pallisty.append(j)
+    maxindex = pallist.index(max(pallist))
+    print (pallistx[maxindex],"x", pallisty[maxindex],"=", max(pallist))
+palnum()
 
 def challenge3(counter):
     #divide from 1 to 10

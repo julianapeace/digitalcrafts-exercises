@@ -54,7 +54,7 @@ def randomemojibanner(n):
 
 #emoji banner
 def emojibanner():
-    sentence = str(input("EMOJI BORDER: Enter a string"))
+    sentence = str(input("EMOJI BORDER|| Enter a string:  "))
     width = len(sentence) + 2
     for i in range(3):
         if i == 0 or i == 2:
@@ -62,7 +62,7 @@ def emojibanner():
         else:
             x = random.randint(0, len(emojilist)-1)
             print(emojilist[x]+sentence+emojilist[x])
-# emojibanner()
+emojibanner()
 
 def emojitriangle(n):
     counter = 1
@@ -70,7 +70,7 @@ def emojitriangle(n):
         x = random.randint(0, len(emojilist)-1)
         print((emojilist[x]*counter).center(n*3, ' '))
         counter = counter + 2
-# emojitriangle(5)
+emojitriangle(5)
 
 #infinite loop of emojis! Beware!
 def infiniteemoji():
