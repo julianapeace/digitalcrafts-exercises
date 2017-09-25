@@ -197,5 +197,5 @@ begin_fill()
 triangle(x)
 end_fill()
 
-clearscreen()
+# clearscreen()
 mainloop()

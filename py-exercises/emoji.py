@@ -19,7 +19,7 @@ monkeycute = u"\U0001F649"
 emojilist = [palm, ok, flower, monkey, dog, poop, fire, lol, hearteyes, okgirl, bike, van, yay, monkeycute]
 
 def emoji():
-    ans = str(input("Which emoji do you want? Type in palm/ok/flower or type 'quit' to stop playing"))
+    ans = str(input("Which emoji do you want? Any number 1 - 13, palm/ok/flower, or type 'quit' to stop playing   "))
     while ans != "quit":
         if ans == "palm":
             print (palm)
@@ -27,8 +27,15 @@ def emoji():
             print(ok)
         if ans =="flower":
             print(flower)
-        ans = str(input("Which emoji do you want? Type in palm/ok/flower or type 'quit' to stop playing"))
+        else:
+            try:
+                val = int(ans)
+                print(emojilist[val])
+            except ValueError:
+                print("That's not a valid input!")
+        ans = str(input("Which emoji do you want? Any number 1 - 13, palm/ok/flower, or type 'quit' to stop playing   "))
     print("bye")
+
 # emoji()
 
 #random emoji function
@@ -62,7 +69,7 @@ def emojibanner():
         else:
             x = random.randint(0, len(emojilist)-1)
             print(emojilist[x]+sentence+emojilist[x])
-emojibanner()
+# emojibanner()
 
 def emojitriangle(n):
     counter = 1
@@ -70,7 +77,7 @@ def emojitriangle(n):
         x = random.randint(0, len(emojilist)-1)
         print((emojilist[x]*counter).center(n*3, ' '))
         counter = counter + 2
-emojitriangle(5)
+# emojitriangle(6)
 
 #infinite loop of emojis! Beware!
 def infiniteemoji():

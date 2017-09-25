@@ -36,6 +36,7 @@ def diamond(x):
 # diamond(50)
 
 def nightsky2():
+
     bgcolor('black')
     for i in range(40):
         x = random.randint(-300,300)
