@@ -27,17 +27,21 @@ def palnum():#could be solved with math or programming way by manipulating strin
                 pallisty.append(j)
     maxindex = pallist.index(max(pallist))
     print (pallistx[maxindex],"x", pallisty[maxindex],"=", max(pallist))
-palnum()
+# palnum()
 
-def challenge3(counter):
-    #divide from 1 to 10
-    if counter < 2500:
-        return hello
-    else:
-        for i in range (1,10):
-            ans = counter % i
-            if ans != 0:
-                challenge3(counter-1)
-    print(counter)
+def holygrail(x):
+    for i in range (11,21): #any num divisible by 1-10, is also divisible by 11-20
+        if x % i != 0:
+            return False
+    return True
 
-# challenge3(3000)
+def challenge3():
+    grail = []
+    counter = 2520
+    while counter != 999999999:
+        if holygrail(counter) == True:
+            grail.append(counter)
+        counter += 2520 #If num is divisible by 20, it must be even. If 2520 is divisible 1-10, then we can move in increments of 2520.
+    print(grail)
+
+# challenge3()
