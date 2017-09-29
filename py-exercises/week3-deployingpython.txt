@@ -1,0 +1,60 @@
+************************************************************************
+                        deploying python
+************************************************************************
+
+
+1. you need a requirements.txt file. Server will check for that file and install whatever is necessary.highly recommended to include version number.goes into the root directory.
+example: tornado==4.5.2
+
+*pip install -r tornado-alf* ?
+
+2. make a Procfile NO extension, goes into the root directory. A web app always has a web server. Can have multiples. (also, this is the heroku standard) In it type:
+  web: python3 hobby.py
+  worker: python3 worker.py
+
+  as a junior developer, companies already have a deployment system. we usually do not have to design. Sometimes, we might be the only developer so we might need to create our own.
+
+3. make a runtime.txt file in the root directory.Also a heroku standard, but many deployment sys follow it. our server defaults to python 2.0, this tells our server to make sure it is this specific python.  In it type:
+  python-3.6.2
+
+4. everything we make, like our portfolio, can now be deployed onto the server. we are letting the server decide which port it wants to use. Now we have to set up the app for that.
+
+5. add the lines:
+
+6. buy a server. Amazon lightsail = $5/month. AWS also works.
+
+7. dokku is static files + application servers. Heroku will make it easy to scale up the app to have 100+ servrs. dokku is meant for personal servers, not good for scaling.
+-web services: oracle, ibm, microsoft, google, amazon, softlayer
+-GCP gives $300 in free dollars
+
+8. select server location, click OS only (not apps+OS), pick ubuntu.
+
+9. get SSH key
+ pro-tip: angular react django are popular enough to build a app with these, if you run into problems, you have support to lean on.
+
+ 10. i named server and static ip masteryoshi and julianapeace. it doesn't matter until someone is working with your server. and julianapeace only shows up in terminal.
+
+ this is my ip: 18.220.156.197
+
+ 11. go to google domains -> configure dns -> new record -> @ -> A -> 15m -> paste ip
+
+ ssh means secure shell.
+ 80% of the world depoys on unix and linux, it's all done on command line. if you have windows, you might have a nice gui.
+
+ 12. go to terminal and log in with ssh ubuntu@julianamei.com
+
+ 13. Now this is your baby, make sure it is safe and secure, make sure your packages are up to date. we can install things very easily with unix and linux.
+  a. sudo apt-get update is the package manager. will go to internet and get the latest packages, I want to check it out.
+  b. sudo apt-get upgrade. will upgrade all our systems.
+
+  (pro-tip)make sure you do this every once in a while. for security. that's it. you just did a server system upgrade.
+
+  c. sudo reboot. will kick you off the server. give it a couple minutes and log back in.
+
+  14. some packages get kept back. type in sudo apt-get install (copy and paste the packages)
+
+  15. now add swap space: do sudo -i, i is for interactive. This means if server runs out of space, it will use your hard drive. it is recommend to keep 1GB free for swap space. Some people don't like swap space, they rather server die and measure exactly what they need bc hard drive is slower.
+
+  the echo line remakes the swap space even if you reboot the machine. don't forget to 'exit' because you're running as admin.
+
+16. follow appset up: server and local both. whenever you want to add another app. 
