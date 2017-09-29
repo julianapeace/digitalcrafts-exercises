@@ -57,7 +57,7 @@ def randomemojibanner(n):
         randomemojis.append(emojilist[x])
     randomemojis = "".join(randomemojis)
     print (randomemojis)
-# randomemojibanner(5)
+# randomemojibanner(50)
 
 #emoji banner
 def emojibanner():
@@ -77,7 +77,7 @@ def emojitriangle(n):
         x = random.randint(0, len(emojilist)-1)
         print((emojilist[x]*counter).center(n*3, ' '))
         counter = counter + 2
-# emojitriangle(6)
+# emojitriangle(10)
 
 #infinite loop of emojis! Beware!
 def infiniteemoji():

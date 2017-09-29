@@ -44,4 +44,4 @@ def challenge3():
         counter += 2520 #If num is divisible by 20, it must be even. If 2520 is divisible 1-10, then we can move in increments of 2520.
     print(grail)
 
-# challenge3()
+challenge3()

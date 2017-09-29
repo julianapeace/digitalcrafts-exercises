@@ -4,7 +4,7 @@ def factorialize(n):
     else:
         return n * factorialize(n-1)
 
-# print(factorialize(4))
+print(factorialize(4))
 
 
 def reverseList(lst):
@@ -14,4 +14,4 @@ def reverseList(lst):
         return []
 
 test = [4,3,2,1]
-print(reverseList(test))
+# print(reverseList(test))
