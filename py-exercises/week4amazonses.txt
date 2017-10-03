@@ -1,0 +1,74 @@
+Part 1: HTML forms
+  make sure all inputs have a name attribute. You will call this name in python.
+
+  can use GET or POST method:
+
+    get - data is saved in the URL, cached in browser. good for when trying to save searches.
+
+    post - data is not saved in the URL, browser won't try to cache input ( can be seen in dev toops: form data)
+
+Part 2: Python
+  inside your class that loads pages, add a method called post (or get)
+  use these to introduce variable to method:
+    name = self.get_query_argument('name')
+    name = self.get_body_argument('name')
+
+    Boto3 is a python library that sends emails
+
+Part 3: Amazon SES
+  AMAZON SES is a verifiable email thing.
+  related to AWS which a lot of employers ask for.
+  Setting up your own email server is a pain in the butt also you're not reputable so you'll be blocked. stands for simple email service.
+
+  DKN - each email has a public key. they get your spam ranking down so you want them.
+
+  first, set up amazon SES. It's free for first 62,000 emails and then 10 cents for each 1000 emails.
+
+  add domain: julianamei.com
+  add email address: chancecordelia@gmail.com (this is your sandbox(testing) email. you can change this later.)
+  set up IAMS: set up identity and access management
+  create a group: call it SES.
+  Attach policy: attach SES policy AmazonSESFullAccess
+  create user: call it SESUser. give them programmatic access. set user to the SES group permissions.
+  This user now has an access key and a secret access key which can be linked to email form.
+
+  notes: I'm not sure what is happening here.
+
+Part 4: credential saving
+  We are going to save these special access keys to two places: to your server and to your local environment.
+
+  local environment:
+    create a .env file in project's root directory. create variable for both access and secret key.
+    SUPER IMPORTANT
+    make sure the .env file is in the .gitignore file or else this shit will be public.
+
+    Now, go to the python code and import dotenv:
+    from dotenv import load_dotenv
+
+    and load it:
+    load_dotenv('.env')
+
+    Update requirements.txt file with python-dotenv
+
+    Now, we do not have to type out the access keys every time we test our app. It is set in your environment for production. In deployment, it will only be stored in the server.
+
+  Server:
+    log into your Server
+
+    Enter this:
+    dokku config:set myproject AWS_ACCESS_KEY=abcdedghi
+    dokku config:set myproject AWS_SECRET_KEY=abadsafjkdjfkj
+
+    Notes: Dokku has a separate ssh. Access it with dokku run [yourproject] bash. This is an easy debug tool for checking if your access keys are set up. Like this:
+    >>> import os
+    >>> os.environ.get(AWS_ACCESS_KEY)
+
+    In the real world, you will only have your access keys in the server.
+
+
+Part 5: Boto3
+      import boto3 to python
+      create an SESclient variable and point it to your access keys
+      create a response variable that tells where the email sends to and what is in the text.
+
+      Update requirements.txt file with
