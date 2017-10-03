@@ -53,8 +53,8 @@ example: tornado==4.5.2
 
   14. some packages get kept back. type in sudo apt-get install (copy and paste the packages)
 
-  15. now add swap space: do sudo -i, i is for interactive. This means if server runs out of space, it will use your hard drive. it is recommend to keep 1GB free for swap space. Some people don't like swap space, they rather server die and measure exactly what they need bc hard drive is slower.
+  15. now add swap space: do sudo -i, i is for interactive. This means if server runs out of space, it will use your hard drive. it is recommend to keep 1GB free for swap space. Some people don't like swap space, they rather server die and measure exactly what they need bc hard drive is slower. solid state drive makes this no longer a real issue.
 
   the echo line remakes the swap space even if you reboot the machine. don't forget to 'exit' because you're running as admin.
 
-16. follow appset up: server and local both. whenever you want to add another app. 
+16. follow app set up: server and local both. whenever you want to add another app.

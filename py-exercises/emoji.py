@@ -57,7 +57,7 @@ def randomemojibanner(n):
         randomemojis.append(emojilist[x])
     randomemojis = "".join(randomemojis)
     print (randomemojis)
-# randomemojibanner(50)
+# randomemojibanner(500)
 
 #emoji banner
 def emojibanner():

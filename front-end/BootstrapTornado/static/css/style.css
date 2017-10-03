@@ -2,12 +2,52 @@
   max-width: 30%;
 }
 
+/*input:invalid {
+  background-color: #ffdddd;
+}
+
+form:invalid {
+  border: 5px solid #ffdddd;
+}
+
+input:valid {
+  background-color: #ddffdd;
+}
+
+form:valid {
+  border: 5px solid #ddffdd;
+}
+
+input:required {
+  border-color: #800000;
+  border-width: 3px;
+}
+
+input:required:invalid {
+  border-color: #C00000;
+}*/
+
+.contact{
+  padding: 10px;
+}
+
+.tipcalculator{
+  width: 50%;
+  padding: 50px;
+}
+
 h1, h2, h3, h4 {
   text-align: center;
 }
 
+h1{
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+}
+
 .jumbotron {
   background-image: url("https://i.imgur.com/VU4Bvo4.jpg");
+  height: 100vh;
 }
 
 .vertical-center {
@@ -27,24 +67,21 @@ h1, h2, h3, h4 {
   padding: 50px;
 }
 
-@media all and (min-width: 1024px) and (max-width: 1280px) {
+@media all and (min-width: 1024px) {
   .navbar {
     width: 100%;
   }
   .emojis {
     width: 100%;
   }
-  .jumbotron {
-    height: 100vh;
+  .contact{
+    padding: 100px;
   }
 }
 
 @media all and (min-width: 768px) and (max-width: 1024px) {
   .navbar {
     width: 100%;
-  }
-  .jumbotron {
-    height: 100vh;
   }
   .travel img{
     max-width: 50%;
@@ -57,16 +94,10 @@ h1, h2, h3, h4 {
   .navbar {
     width: 100%;
   }
-  .jumbotron {
-    height: 100vh;
-  }
   .emojis {
     width: 100%;
   }
 }
 
 @media screen and (max-width: 768px) and (orientation: landscape) {
-  .jumbotron {
-    height: 100vh;
-  }
 }
