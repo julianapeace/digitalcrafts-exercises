@@ -45,7 +45,7 @@ class TipCalcHandler(TemplateHandler):
     def post(self):
         bill = float(self.get_body_argument('bill'))
         service = self.get_body_argument('service')
-        people = self.get_body_argument('people')
+        people = float(self.get_body_argument('people'))
 
         if service == "Good":
             tip = bill * 0.20
@@ -60,6 +60,59 @@ class TipCalcHandler(TemplateHandler):
             totalbill = (bill + tip)/people
 
         self.render_template('tip.html', {'bill': bill, 'service': service, 'people': people, 'totalbill': totalbill})
+
+from bs4 import BeautifulSoup
+import requests
+
+class PyScraper(TemplateHandler):
+    def post(self):
+        url = self.get_body_argument('url')
+        numwords = int(self.get_body_argument('numwords'))
+
+        r = requests.get(url)
+        html_content = r.text
+        soup = BeautifulSoup(html_content, 'html.parser')
+        for script in soup(["script", "style"]):
+            script.extract()    # rip it out
+
+        soup = soup.get_text().strip().split()
+
+        uniquewords = {}
+
+        for i in soup:
+            if i not in uniquewords:
+                uniquewords[i] = 0
+        for i in soup:
+            uniquewords[i] += 1
+
+        order = sorted(uniquewords, key = uniquewords.get, reverse=True)
+        values = [uniquewords[key] for key in order]
+
+
+        # uniquewords =[]
+        # for i in range(numwords):
+        #     uniquewords.append(order[i])
+
+        self.render_template('pyscrap.html', {'url': url, 'words': uniquewords})
+
+class Readable(TemplateHandler):
+    def post(self):
+        url = self.get_body_argument('url')
+
+        r = requests.get(url)
+        html_content = r.text
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        h1 = soup.find_all(["h1"]) #list of h1
+        p = soup.find_all(["p"]) #list of p
+
+        h1p = soup.find_all(["h1","p"])
+
+        soup = []
+        for i in h1p:
+            soup.append(i.get_text())
+
+        self.render_template('readable_result.html', {'url': url, 'soup': soup, 'h1': h1, 'p': p})
 
 class PageHandler(TemplateHandler):
     def post(self, page):
@@ -98,6 +151,8 @@ def make_app():
         (r"/", MainHandler),
         (r"/page/(.*)", PageHandler),
         (r"/tipcalc", TipCalcHandler),
+        (r"/py-scraper", PyScraper),
+        (r"/readable", Readable),
         (
             r"/static/(.*)",
             tornado.web.StaticFileHandler,

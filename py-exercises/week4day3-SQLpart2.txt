@@ -1,0 +1,31 @@
+SQL part two:
+Advantages of nosql is that you have larger tables, therefore there is no cost of creating another "lookup". less relationships.
+
+repeating your data is ok because nowdays storage is very cheap and quite fast with SSD. For web stuff, storage is not really an issue.
+
+if you're building a node bot, there's limited space so you might prioritize space.
+
+*********************
+One to Many
+*********************
+When it's doing a join, it's attaching ID to ID and combining the data (which is like two queries). Even though we can join by any key, the Primary key is faster bc it's indexed.
+
+Relationships make it fast. SQL > nosql
+
+RIGHT/LEFT usually just tell me which table I start with
+USU don't do a full join
+Paul usually only do left joins and just switch the tables. Helps keep it straight in the head.
+
+JOIN = LEFT INNER JOIN
+
+OUTER JOIN will bring in the "outliers" that didn't match up. Prob get more data.
+
+*********************
+Many to Many
+*********************
+In this relationship, there is a third table that connects the two. Naming convention: Paul likes to simple combine both tables to name the third table.
+
+*********************
+DISTINCT AND SUBSELECTS
+*********************
+When you're doing a full outter join, many times you will get duplicate data, you'll likely use DISTINCT, to get just singlets.

@@ -16,6 +16,7 @@ van = 	u"\U0001F68C"
 yay = u"\U0001F64C"
 monkeycute = u"\U0001F649"
 
+
 emojilist = [palm, ok, flower, monkey, dog, poop, fire, lol, hearteyes, okgirl, bike, van, yay, monkeycute]
 
 def emoji():
@@ -89,3 +90,34 @@ def infiniteemoji():
             infiniteemojilist.append(emojilist[x])
             print (infiniteemojilist)
 # infiniteemoji()
+
+def emojicipher(n):
+    plain = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', '?']
+    emoji = ['🐶','🐱','🐧','🐝','🦄','🦋','☘️','🌺','⭐️','🔥','🌈','💦','🍕','🍭','😃','🚌','✈️','🔫','😂','💩','👻','🙌','💙','💚','💛']
+
+    newstr = []
+    for i in n:
+        newstr.append(emoji[plain.index(i)])
+    newstr = "".join(newstr)
+    print(newstr)
+# emojicipher('hello')
+
+from string import whitespace
+def unemojicipher(n):
+    plain = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', '?']
+    emoji = ['🐶','🐱','🐧','🐝','🦄','🦋','☘️','🌺','⭐️','🔥','🌈','💦','🍕','🍭','😃','🚌','✈️','🔫','😂','💩','👻','🙌','💙','💚','💛']
+
+    newstr = []
+    for i in n:
+        newstr.append(plain[emoji.index(i)])
+    newstr = "".join(newstr)
+    print(newstr)
+
+# unemojicipher(['🌺','🦄','💦','💦','😃'])
+# unemojicipher(🌺🦄💦💦😃)
+
+# print(str('🦄 '.encode('unicode-escape')).strip(whitespace+"'"+"b\\"))
+uni = str('🦄 '.encode('unicode-escape')).strip(whitespace+"'"+"b\\")
+test = '🦄 '.encode('unicode-escape')
+print(test.decode('unicode-escape'))
+# unicorn = u"\U0001f984"

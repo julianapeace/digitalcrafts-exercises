@@ -32,12 +32,12 @@ def exercise3():
 #break down speech, line by line
     wordspeech = []
     for i in contents:
-        parts = i.strip().split()
+        parts = i.lower().strip().split()
         wordspeech.append(parts)
     # print(wordspeech[0:3]
 
 #break down speech, word by word
-    wordlist  =[]
+    wordlist  = []
     for i in range(len(wordspeech)):
         for j in wordspeech[i]:
             wordlist.append(j)
@@ -106,4 +106,4 @@ def bonus():
     fh.write("Some more stuff")
     contents = fh.getvalue()
 
-bonus()
+# bonus()

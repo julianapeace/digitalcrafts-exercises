@@ -1,0 +1,22 @@
+PostgreSQL: intro to databases
+
+1. download and install postgres and postico
+
+2. in order for "psql" to work in terminal, you need to nano into ~/.bash_profile and paste:
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.6/bin
+restart terminal
+
+3. In the psql shell: createdb and dropdb to make and delete databases. \q to quit
+
+4. Querying through data in SQL is going to be a lot faster than Python. It costs less. It's built in and free. Although, while we are learning, there is a lot of control by doing it in python. WE can manipulate data from python or from sql.
+
+5. How to "undo" in a database: start a transaction. In the real world, we would have a database backed up so we don't fuck up.
+Protip: 90% of the time, do not ever delete. It is very dangerous and cannot delete. Big companies do not ever delete, they store everything.
+
+6. MYSQL, MSSQL, ORACLE, POSTGRESQL: if you can, do your stats here. It's so much faster than anything you could ever make. They have all been optimized for this.
+Note: postgre has always been popular, works super well, and it's free. It's not even more popular now that oracle purchased MSSQL. Nobody likes oracle, they like to charge you money for db.
+
+7. It IS POSSIBLE to make SQL functions that cna pass in arguments. But paul says it's hard to maintain seqal code, unlike python code. When we get to that point we will need to upload sql code to database and it is finicky. But if we need to eek out some performance, we can definitely choose to do sql code.
+
+8. psql test -f test.sql
+using this line in the terminal will execute whatever command you have written in the file
