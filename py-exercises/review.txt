@@ -1,0 +1,30 @@
+Review notes:
+
+HTML/CSS quiz
+
+THE CSS:
+div p {} will grab all the p elements within any div elements
+div > p{}  selects p with immediate parent div
+div, p {} selects all
+What does the CSS "display: inline-block"? gives an element fixed dimensions, not 100% which.
+
+
+THE HTML:
+what goes on top of every HTML Doc? <!DOCTYPE html>
+By default, how much width does an INLINE element take up? Only as much as it needs
+By default, how much width does a BLOCK element take up? 100% of the parent element
+Which HTML element will correctly assign an ID? id = ""
+Which HTML element will correctly assign a class? class="___"
+How many elements can share a given class? infinite
+How many elements can share a given id? 3
+
+THE SERVER:
+200 = successful
+300 = redirect
+400 = client error
+500= server error
+
+The PYTHON:
+What is a method, with regard to classes? it is a function inside a class
+what argument do all class methods need to be passeD? self
+How would you access the instance/variable 'name' form inside of a class method? self.name
