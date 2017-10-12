@@ -1,4 +1,8 @@
+"""
+Exercise3 is a speech parser. Prints top 50 words used in obama's inauguration speech.
+"""
 def exercise1():
+    print('Write a program that prompts the user to enter a file name, reads the contents of the file and prints it to the screen.')
     fh = (input("Let's read an existing file. Enter a file name: "))
     with open(fh, 'r') as fh:
         contents = fh.read()
@@ -6,6 +10,8 @@ def exercise1():
 # exercise1()
 
 def exercise2():
+    print('Write a program that prompts the user to enter a file name, then prompts the user to enter the contents of the file, and then saves the content to the file.')
+
     filename = input("Let's create a new file. Enter a file name: ")
 
     fh = open(filename, 'w')
@@ -18,10 +24,12 @@ def exercise2():
     fh.close()
     print(contents)
 
-#use the file name: test.txt
-# exercise2()
+
+# exercise2() #use the file name: test.txt
 
 def exercise3():
+    print('Write a program that prompts the user to enter a file name, then prints the letter histogram and the word histogram of the contents of the file.')
+
     filename = input("Open an existing file. Enter a file name: ")
     # fh = open(filename, 'r')
     # contents = fh.readlines()
@@ -70,12 +78,13 @@ def exercise3():
             letter_dict[j] = letter_dict[j] + 1
     # print(letter_dict)
 
-# exercise3()
+# exercise3() # use test.txt
 
 import json
 import matplotlib.pyplot as plot
 
 def exercise4():
+    print('Write program that takes a JSON file name as input and plots the X,Y data. Exchange JSON data with others to test your program more thoroughly.')
 #use test.json
     data = {'data': [
         [1, 7],
@@ -102,6 +111,7 @@ def exercise4():
 
 import io
 def bonus():
+    print('Bonus: Crash Test - Write a program that writes to an in memory file and keeps track of how many characters/bytes were added and prints that information to the screen. Continue adding characters until your program dies.(1)At what count did your computer crash? (2) What kind of error did you get? (3)Did your program crash earlier or later than expected? Why do you think?')
     fh = io.StringIO()
     fh.write("Some more stuff")
     contents = fh.getvalue()

@@ -1,4 +1,4 @@
-************************************************************************
+ ************************************************************************
                         deploying python
 ************************************************************************
 
@@ -58,3 +58,10 @@ example: tornado==4.5.2
   the echo line remakes the swap space even if you reboot the machine. don't forget to 'exit' because you're running as admin.
 
 16. follow app set up: server and local both. whenever you want to add another app.
+
+17. To view dokku apps: “dokku apps” 
+To delete app: “dokku apps:destroy —appname—“
+To create app: “dokku apps:create —appname—“
+
+18. git remote add dokku dokku@your-domain.com:project-name
+git push dokku

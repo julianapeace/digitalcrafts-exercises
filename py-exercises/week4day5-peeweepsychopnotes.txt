@@ -1,0 +1,25 @@
+week4day5 - peewee and psycopg2
+
+Database tools!
+
+peewee lets you not have to write manual SQL statements
+psycho is putting sql statements IN your python code.
+
+something called "migrations" peewee does a data migration
+
+so when you say "run the first migration" you're running a python file. It could also be a numbered sequal file.
+
+just make sure whatever you do here, when you go to dpeloy it you can do the same thing.
+
+ORM are good bc you can do a lot of stuff and screw up less. if you do it manually, you'll probably mess something up. Forces you into best practices.
+
+
+Everytime you add a new key (like author) you need a new migration.
+
+BACKWARDS migration
+for if you mess up.
+
+Whenever we do a migration in ORM, it is the equivalent of an ALTER TABLE or ALTER COLUMN in sql.
+
+if you have already created you, this is how you reference it.
+me = Author.select().where(Author.twitter =='pizzapanther').get()

@@ -1,0 +1,76 @@
+darkSKYAPI - weather data. Unlike other weather apps, they take other weather API's an accumulate it on one site. THey call it "hyper local"-goal is to predict the minute a rain storm is happening on your particular area of the world.
+
+rapidAPI - database of API's.
+
+Json files are mostly used now. If you're passing data that JSON doesn't support, you gotta do some conversion. Like datetime is not supported, would have to convert to string.
+
+XML and Pickle is deprecated.
+
+Weather app project:
+-start new repo
+-clone to pwd
+-mk virtual env
+-git init
+
+how to import json file:
+  requests.get json file
+  data = r.json()
+  to call: data[0]
+  like a dictionary
+
+To pass in get parameters to a URL:
+  we can create a dictionary
+  payload = {'q': 'programming'}
+  r= requests.get('http://google.com/search', params=payload)
+
+how to request post:
+  post_data = {'key':'value'}
+  r=requests.get(URL, data = post_data)
+  r=requests.get(URL, data = post_data, params={}) *optional, can also do parameters
+  r.json() to view data
+
+Authentication:
+  A lot of API's give you a key to track how much you're calling it.
+  basic authentication includes your username and password in every requests. If you're using HTTPS, it should be ok.
+  key authentication means you generate a key that is attached to your account. if your account gets compromised, you can generate a new key,
+
+  OAuth - is a very different beast. you can request a key for someone else. Not charged to you. Like Aspen's project to allow her grandma to upload to youtube. Oauth has permission levels. Like when you usea  service that connects to your google account, it's doing oauth, you're giving them access to view your email for example. A third party screen is Oauth. Permission levels.
+  very hairy very quickly, and difficult to do on your own. Usually when you have Oauth, a lot of API's will build a library to automate the process for you.
+
+  Google Oauth
+  if you use google API, recommended not to don't use requests. use google python package. to let Oauth be taken care of for you.
+  Yelp - same sitch
+
+Postman:
+  good tool to test our API's before using them
+  basic auth is coding username/password in base64 which is encoded but NOT ENCRYPTED. can be decoded very quickly.
+
+  Post > raw > this is a special case where soem API's accept Json. You might input some json here. In most scenario, you won't be manually typing because you'll need to know all the escape codes.
+
+
+Disposable username/passwords:
+  sometimes API designers like to reuse username/password modules. Just make a new temp user everytime.
+
+
+Basic APP.PY structure:
+  class Mainhandler(TempalteHandler):
+    get:
+      #render input form
+    post:
+      #get city name
+      #look up weather
+      #render weather data
+
+Caching data:
+  API have limits. to stay under limit, you can cache your requests and place a check on it. If under 15 minutes old, can just reuse old data.
+
+
+Jinja > How to loop through dict:
+{% for dict_item in main %}
+  {% for key, value in dict_item.items() %}
+    <h1> Key: {{key}} </h1>
+    <h2> Value: {{value}} </h2>
+  {% endfor %}
+{% endfor %}
+
+    self.render_template('weather_results.html', {'name':name, 'visibility':visibility, 'clouds':clouds, 'wind':wind, 'main':main, 'order':order, 'values':values})
