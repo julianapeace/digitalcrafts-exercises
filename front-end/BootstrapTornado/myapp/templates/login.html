@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Login Page{% endblock %}
+
+
+{% block jumbotron %}
+<div class="g-signin2" data-onsuccess="onSignIn">Login with Google</div>
+
+<form class="" action="/login" method="post">
+<label for="email">Username</label>
+<input type="text" name="email" value="">
+<br>
+<label for="password">Password</label>
+<input type="password" name="password" value="">
+<button type="submit" name="button" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
+
+{% block tipcalculator%}{% endblock%}
+{% block emoji%} {%endblock%}
+{% block travel%} {%endblock%}
+{% block contact %} {% endblock %}

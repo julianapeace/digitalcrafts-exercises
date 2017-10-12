@@ -1,0 +1,22 @@
+{% extends "blogbase.html"%}
+
+{% block title %}Edit|{{post.title}}{% endblock %}
+
+{% block editblog%}
+<form action="/update" method="post">
+  <input type="hidden" name="slug" value="{{post.slug}}">
+
+  <label for="title">Title</label>
+  <input type="text" name="title" value="{{post.title}}"><br>
+
+  <label for="author">Author</label>
+  <input type="text" name="author" value="{{author.name}}" disabled><br>
+
+  <label for="body">Post Content</label><br>
+  <textarea name="body" rows="8" cols="80">{{post.body}}</textarea><br>
+
+  <button type="submit" name="button" class="btn btn-primary">Submit</button>
+
+  <button type="" name="" class="btn btn-outline-secondary"><a href="/page/blog.html">Cancel</a></button>
+</form>
+{% endblock %}
