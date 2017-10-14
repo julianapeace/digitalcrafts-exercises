@@ -1,0 +1,18 @@
+**********************
+JQUERY
+**********************
+
+1. Usually used front end
+2. What is a DOM? Document object model. The DOM is the piece of HTML that we can manipulate with Jquery.(E.g. the title of your page).
+  What is a Node? Node is usually a tag in an html source code. node has properties, like class. JQ can manipualte properties too.
+3. if you don't want to build something. jquery has a lot of plugins to do it for you with little code
+4. makes calling API from the browser
+5. nowadays jquery kinda sucks, it's an older tool but still gets the job done. still see in older projects so we need to know it.. but its not the hottest thing to use now.
+  why all the hate?
+  it gets things done right away but when things scale, bigger application, starts to get too complicated.
+  That's where REACT is better that medium to big size projects.
+  JQUERY is for small to medium projects.
+6.When you want to know how long someone held a button you use key down event
+7. jquery autocomplete plugin
+similar to html datalist
+8. extracting from forms. Can autopopulate the current page with returned API! right in the browser.

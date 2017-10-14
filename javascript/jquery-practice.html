@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function () {
+      $('#clear-button').click(function(){
+        $(this).siblings('input:text').val('');
+      })
+      $('#save-button').click(function(){
+        var $x = $('<li/>');
+        var $y = $('#text-field').val();
+        $x.append($y);
+        $('#log').append($x)
+      });
+      $('a').click(function (event) {
+        event.preventDefault();
+        var site = $(this).attr('href')
+        $('iframe').attr('src', site)
+      });
+      $('#section-header').click(function(event){
+        $('#section').slideToggle()
+      })
+  });
+    </script>
+    <style>
+    #section-header {
+      background-color: blue;
+      color: white;
+      padding: 5px;
+    }
+    #accordion {
+      width: 400px;
+      background-color: yellow;
+      margin: auto;
+    }
+    #section {
+      padding: 5px;
+    }
+    </style>
+  </head>
+  <body>
+    <input id="text-field" type="text" name="text">
+    <button id="clear-button">Clear</button>
+    <button id="save-button">Save</button>
+    <ul id="log">
+      <li>Type messages here:</li>
+    </ul>
+<!--
+
+-->
+    <div id="accordion">
+          <h3 id="section-header">Section 1</h3>
+          <div id="section">
+            <p>
+            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+            </p>
+          </div>
+        </div>
+<!--
+
+-->
+    <ul>
+      <li><a href="http://hellohappy.org">Hello Happy</a></li>
+      <li><a href="http://duckduckgo.com">DuckDuckGo</a></li>
+      <li><a href="http://css-tricks.com">CSS Tricks</a></li>
+    </ul>
+    <iframe id="iframe" src="http://hellohappy.org" width="800" height="480"></iframe>
+
+
+  </body>
+</html>
