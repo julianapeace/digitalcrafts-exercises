@@ -59,7 +59,7 @@ example: tornado==4.5.2
 
 16. follow app set up: server and local both. whenever you want to add another app.
 
-17. To view dokku apps: “dokku apps” 
+17. To view dokku apps: “dokku apps:list”
 To delete app: “dokku apps:destroy —appname—“
 To create app: “dokku apps:create —appname—“
 
