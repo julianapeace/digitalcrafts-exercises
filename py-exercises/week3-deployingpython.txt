@@ -31,6 +31,7 @@ example: tornado==4.5.2
 
 9. get SSH key
  pro-tip: angular react django are popular enough to build a app with these, if you run into problems, you have support to lean on.
+ USE dokku-letsencrypt (beta) (github)
 
  10. i named server and static ip masteryoshi and julianapeace. it doesn't matter until someone is working with your server. and julianapeace only shows up in terminal.
 
