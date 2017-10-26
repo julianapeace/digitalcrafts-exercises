@@ -50,6 +50,7 @@ var options = {
 function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
     var info = JSON.parse(body);
+    console.log(info)
     console.log(info.stargazers_count + " Stars");
     console.log(info.forks_count + " Forks");
     //found emoji in request
@@ -67,9 +68,9 @@ function callback(error, response, body) {
 
 request(options, callback);
 };
+apirequest()
 
 function emojifun(){
-// apirequestion()
 var emoji = "🦄";
 var shortname = emojione.toShort(emoji);
 console.log(shortname)
