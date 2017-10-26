@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <style>
+    .container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .row{
+      width: 100vh;
+    }
+
+    .radio-button {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+    .radio-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      border: 2px solid #079ad9;
+      /*border-radius: 1px;*/
+      padding: 1rem;
+      transition: transform 300ms ease;
+    }
+    .radio-tile-label {
+        text-align: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .radio-button:checked + .radio-tile {
+      background-color: #079ad9;
+      color: white;
+      /*transform: scale(1.1, 1.1);*/
+    }
+    </style>
+
+    <title>Playing with Radio Buttons</title>
+  </head>
+  <body>
+
+<div class="container">
+    <div class="row">
+        <div class="test col-lg-6">
+          <input type="radio" id="yes" name="test" class="radio-button" value="yes">
+          <div class="radio-tile">
+            <label for="yes" class="radio-tile-label">Yes</label>
+          </div>
+        </div>
+
+        <div class="test col-lg-6">
+          <input type="radio" id="no" name="test" class="radio-button" value="no">
+          <div class="radio-tile">
+            <label for="no" class="radio-tile-label">No</label>
+          </div>
+        </div>
+    </div>
+</div>
+
+  </body>
+</html>

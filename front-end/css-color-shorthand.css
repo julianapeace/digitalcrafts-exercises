@@ -1,0 +1,42 @@
+/*CSS HEX: COLORS SHORTHAND*/
+/*https://web.njit.edu/~kevin/rgb.txt.html*/
+
+body{
+  color:#789;/* LightSlateGrey */
+  color:#000;/* Black */
+  color:#222;/* darkgray */
+  color:#333;/* grey20 */
+  color:#555;/*  */
+  color:#666;/* grey40 */
+  color:#777;/*  */
+  color:#888;/*  */
+  color:#999;/* grey60 */
+  color:#bbb;/*  */
+  color:#ccc;/* grey80 */
+  color:#ddd;/* greywhite */
+  color:#eee;/* grey white */
+  color:#fff;/* white */
+  color:#abc;/* grey light blue */
+  color:#9cf;/* light blue */
+  color:#bff;/* pale turquoise */
+  color:#026;/* royalblue5 */
+  color:#369;
+  color:#39c;
+  color:#69c;
+  color:#00f;/* blue */
+  color:#00e;/* blue1 */
+  color:#0ff;/* aqua */
+  color:#0ee;/* cyan2 */
+  color:#000;
+  color:#0f0;/* lime */
+  color:#0e0;/* green2 */
+  color:#c33;/* mauve */
+  color:#f00;/* red */
+  color:#e00;/* red2 */
+  color:#f0f;/* magenta */
+  color:#e0e;/* magenta2 */
+  color:#fbf;/* plum1 */
+  color:#96c;/* lilac */
+  color:#ff0;/* yellow */
+  color:#ee0;/* yellow2 */
+}

@@ -1,0 +1,80 @@
+NPM notes
+
+npm install -g marked (installs it globally on your machine)
+how install a packages:
+go to project directory and create your personal  npm package with node init.
+mak
+
+check your package.json
+  depenedicies are used for app to run. its what you need for deployment.
+  "marked" converts markdown to html.
+  dev dependicies are whats used wheen your'e testing?
+  npm install marked --save (this command will save it to your "requirements" dependencies )
+  npm install marked --save -dev (saves to dev dependeicies)
+  the ^ (the carrot symbol) means "similar". Node follows semantic versioning.  semver.org
+      Every dependency has 3 nums. The first is the major version, second is minor version, third is patch version.
+      if you have a bug and it doesn't change the way of something works, then you update your patch version.
+      if you add functionalities, then its a minor version but the old stuff still works. the major version is what you change something big and the old stuff doesnt work.
+if you delete the carrot, it no longer installs the bug fixes (the patch version).
+Python world: in the requirements txt you use a == to get the exact version. a single "=" allows patch version.
+pypi is a community site, they don't enforce version numbering.
+npm is a company, they force semantic versioning.
+
+if you're git cloning a project, you have to install the package json. run "npm install" --only=dev (installs only the dev modules)
+to install dependencies, run "npm init"
+
+
+==========================================================================================
+
+MAKE YOUR OWN MODULES
+
+==========================================================================================
+
+var request = require('request');
+var fs = require('fs');
+function saveWebPage(url, filename, callback) {
+  request.get(url, function(err, response, html) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    fs.writeFile(filename, html, function(err) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      callback(null);
+    });
+  });
+}
+
+in python, we can import other files. we get access to anything in the file.
+In JS, we have to decide what we can export, we dont jjust get everything.
+
+add one line to make your js exportable "exports.saveWebPage = saveWebPage;" (saveWebPage is your function, they dont have to be the same name, you can name it anything)
+"export.fs = fs;"
+
+HOW TO IMPORTANT
+
+var index = require('./index')
+js is based on the file system. If its a personal thing you created in your project, you place your relative file path. Import it with "index.hello". Now you can use all the functions in index.js with "index.hello()" (index is the imported file and hello is the exported function)
+
+If you just want to export one thing, you use "module.exports = saveWebPage;"
+Now if you import the file again with (var index = require('./index')), commmand line "index", will only import one function (returning function hello). use with index(). Or better yet, to be more clear, declare the import with var hello = require('./index')
+
+when we make a name variable = paul, in browser it is actually a window.name bc the browser is the global. In node, its module.name.
+
+==========================================================================================
+
+HOW TO PUBLISH MODULE
+
+==========================================================================================
+its easy to get it your stuff up onto NPM
+1. look for a name that is available. under name in package json, make sure the name is available.
+2. need an NPM account
+3. log into npm in terminal
+4. npm publish
+5. voila!
+6. npm unpublish (only usable in the first hour/24 hours)
+
+Doesn't really get enforced, you can publish anything and anybody can start using it.
