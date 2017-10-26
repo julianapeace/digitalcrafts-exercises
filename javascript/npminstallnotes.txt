@@ -2,8 +2,8 @@ NPM notes
 
 npm install -g marked (installs it globally on your machine)
 how install a packages:
-go to project directory and create your personal  npm package with node init.
-mak
+go to project directory and create your personal  npm package with "npm init."
+makes a package.json
 
 check your package.json
   depenedicies are used for app to run. its what you need for deployment.
