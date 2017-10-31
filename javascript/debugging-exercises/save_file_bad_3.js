@@ -14,7 +14,7 @@ mkdirp('/tmp/foo/bar/baz', function (err) {
 
 var amjad = 'https://amasad.me/';
 var filename = 'amjad.html';
-var path = '/data';
+var path = './data';
 
 request.get(amjad)
   .then(function(html) {

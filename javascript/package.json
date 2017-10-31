@@ -13,6 +13,7 @@
     "cheerio": "^1.0.0-rc.2",
     "lodash": "^4.17.4",
     "pg-promise": "^7.2.0",
+    "prompt-promise": "^1.0.3",
     "request": "^2.83.0",
     "request-promise": "^4.2.2"
   }
