@@ -1,0 +1,21 @@
+{
+  "name": "bug-sandwich",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cap_file_bad.js",
+  "dependencies": {
+    "fs-promise": "^2.0.1",
+    "gm": "^1.23.0",
+    "mkdirp": "^0.5.1",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.0"
+  },
+  "devDependencies": {
+    "gm": "^1.23.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

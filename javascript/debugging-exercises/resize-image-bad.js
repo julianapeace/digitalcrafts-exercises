@@ -1,0 +1,27 @@
+var request = require('request-promise');
+var Promise = require('bluebird');
+var fs = require('fs-promise');
+var gm = require('gm');
+Promise.promisifyAll(gm.prototype);
+
+var url = 'https://raw.githubusercontent.com/voodootikigod/logo.js/master/js.png';
+var options = { url: url, encoding: null };
+
+request(options)
+  .then(function(data) {
+    console.log('wrote first file')
+    return fs.writeFile('logo.png', data);
+  })
+  .catch(function(err) {
+    console.log('Error: ' + err.message);
+  });
+
+gm('logo.png')
+  .resize(240, 240)
+  .writeAsync('logo-small.png')
+  .then(function(){
+    console.log('success')
+  })
+  .catch(function(e){
+    console.log(e.message)
+  })
