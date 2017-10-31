@@ -1,0 +1,25 @@
+======================
+debugging notes
+======================
+
+  ##### NODE DEBUGGER ######
+    1. node comes with a debugger built in. $ node debug main.js
+    2. most likely want to set a break point. type in debugger; anywhere in the code. hit continue. the debugger will stop at that point and check the variables, see what it looks lile. $ repl will drop you into a shell at the point. any scope or context will be available, play around, see if it works. like a freeze time.
+    3. debugging is important in javascript bc things don't actually break.
+
+  ##### CHROME DEBUGGER ######
+    4. chrome debugger. can select line of code and debugger will run through until that line.
+    5. there's an event listener, e.g. will stop when mouse is clicked.
+    6. CSS debugger. quite powerful, hardest CSS bugs are temporary states, can force hover/visited/focused/active states.
+    7.
+
+  ##### HTTP ERRORS #######
+    8. popular http errors
+        404: You typed the wrong URL?
+        403: You're not logged in? Do you have permission?
+        500: Probably not your fault or maybe you did something to break the page?
+        502/503: Website/service is down, time for a beer?
+        504: Your request took too long and was killed.
+        400: Did you call the API correctly?
+        401: Are you logged in? Do you have permission?
+        405: Did a POST instead of GET or vice versa?
