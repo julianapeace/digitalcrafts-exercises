@@ -1,0 +1,74 @@
+//////////////////////
+// SEQUELIZE WEEK-8 FRIDAY
+//////////////////////
+
+sequelize is an ORM that will generate SQl code for you. it will make model files and take care of sql injections for you.
+pg-promise will give you efficient sql.
+Pro of ORM, with just a few lines of code, you will pul out the data you want. You can do 300 queries in two lines of code. Paul prefers an ORM to get stuff done faster.
+
+like peewee.
+
+sequelize is a big better than peewee. it has a config file to set up database for testing and/or production. allows  you to switch databases very quickly.
+
+{
+  "development": {
+    "username": "postgres",
+    "password": null,
+    "database": "database_name",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL"
+  }
+}
+//delete the test environment if you want and just use production. in the real world you have dev, testing, production, staging.
+
+
+$ sudo -i -u postgres
+$ createdb stest
+// takes you into postgres in the terminal, creates db stest.
+
+peewee forced you to write your migrations yourself. sqlize has tools to help you.
+
+example: build model to create a user login for the todo-app.
+
+# Generate a Model
+$ sequelize model:generate --name user \
+  --attributes firstName:string,lastName:string,email:string
+
+it generate model for a user with attributes firstname, lastname, and email.creates all the files, but didn't make the changes to your database yet.
+
+# Run the Migrations
+$ sequelize db:migrate
+
+this command will create the database. sqlize will keep track of how many migrations you run. so you can use this same command over and over again.
+
+
+##create a nickname
+sqlize foces you to give a migraiton a nickname. you dont have to do it with teh first one bc its usually called init/initiatlize. for the following, you want to describe it briefly.
+
+Add your model: nickname: DataTypes.STRING
+
+$sequelize migration:create --name add-nickname
+
+#migrating forward
+#migrating backwards
+module.exports = {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.addColumn(
+      'users',    //you want to add column nickanme
+      'nickname', // to table users.
+      {
+        type: Sequelize.STRING
+      }
+    );
+  },
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.removeColumn(
+              'Users', 'nickname'); //removing column nickname
+                                      //from table users
+  }
+};
+
+$sequelize db:migrate (it automatically knows u ran the last one)
