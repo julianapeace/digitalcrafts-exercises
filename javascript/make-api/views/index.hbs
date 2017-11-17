@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 body col-md-12">
+      <form class="" action="/myapi" method="post">
+        <input style='display: block; letter-spacing: 10px;' type="submit" class="btn btn-lg btn-success" name="" value="WEATHER NOW">
+      </form>
+    </div>
+  </div>
+      <div class="row">
+        <div class="col-lg-12 response col-md-12">
+          {{#each array}}
+            {{this}}<br>
+           {{/each}}
+        </div>
+      </div>
+</div>

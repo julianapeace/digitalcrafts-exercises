@@ -1,0 +1,88 @@
+//////////////////////////
+MIDDLEWARE NOTES
+//////////////////////////
+
+middleware is good for logging, user authentication, parsing requests.
+  in express/nodejs, middleware is signaled by "app.use"
+
+  you make make up your own middleware.
+  eg.:
+  app.use(function(request, response, next){
+    console.log(request.method, request.path);
+    next();
+  })
+  if you don't include next, it will just hang. next will ok i'm done, move on to the next thing.
+  this example function will log every page you go to now.
+  actually, everything is middleware. because we get req,res,next everywhere! GASPPP
+  eg.
+  app.get('/user/:id', function (request, response, next) {
+  response.send('USER')
+})
+protip - not really, you can have more than one view. like more than one "/" even though paul doesn't recommend it because it gets confusing.
+
+LOGGING MIDDLEWARE
+    var morgan = require('morgan');
+    app.use(morgan('dev'));
+
+    gets color coded logging, request http, and time taken. probably something we need on all our apps for debugging. recommended in production also. "dev" gives you the coloring.
+
+LEARNING HOW TO MAKE A LOGIN
+  recommended that we learn but it can be complicated and easy to have big security holes. it's recommended to use Oauth, or use a login library to help out. But still should know. Paul recommends passport, javascript oauth, auth0, Gauth. Use facebook media login. If it's super sensitive, you need to have your own login system. Use NPM libraries (e.g there's one for sequelize, it depends on how you build your database)
+  npm install express-session
+
+var session = require('express-session');
+app.use(session({
+  secret: process.env.SECRET_KEY || 'dev', //indeployment, the secret-key should be a random string.
+  resave: true, // if your cookie expires, it will resave your cookie when you login again.
+  saveUninitialized: false,
+  cookie: {maxAge: 60000} //this middleware will add a cookie to the response. //cookie:(maxAge: 6000, domain: *.example.com OR example.com OR *)
+}));
+  *becareful which middleware you use bc every page on your app will go through it.
+
+  COOKIES
+  you can add cookie more secure by declaring the domain. tracking cookies don't set any domain, so any page will see the cookie. ad agencys do it. Usually called a super cookie. For us, you want to set domain so it's only usable on your site, typically for security you don't want to leave that empty.
+
+  we can also lock cookie down by path so only one website with somethign like { path:'/', httpOnly: true, securey:false, maxAge:null}
+  Docs: by default no domain is set, most browsers will assume it's the current domain, whichever site it comes from.
+  MaxAge is how long your cookie should last for. 60000milliseconds is 60 seconds. FOr a login system, we probably want every 2weeks to 1 month.
+
+  secure cookie vs insecure cookie. secure cookies are encoded and you gotta decode it on the way back.
+
+
+  app.use(function (request, response, next) {
+  if (request.session.user) { //session library checks to see if user has the cookie.
+    next();
+  } else if (request.path == '/login') { //sometimes pages are not important for login authentication, so go ahead and let them in.
+    next();
+  } else {
+    response.redirect('/login'); //if user isnt logged in, redirect to login.
+  }
+});
+
+if we try the above code out, we get redirected to the login' page.
+
+app.get('/login', function (request, response) {
+  response.render('login.hbs');
+});
+app.post('/login', function (request, response) {
+  var username = request.body.username;
+  var password = request.body.password;
+  if (username == 'aaron' && password == 'narf') {
+    request.session.user = username;
+    response.redirect('/');
+  } else {
+    response.render('login.hbs');
+  }
+});
+
+If it's the first time, you're going to render a form to type in user/pw. once they hit submit, get form data and check if it's correct, then put that data in your session. session takes care of setting the cookie and save the info for you. Now redirect them to the homepage once logged in. If it's wrong, render the form again.
+
+Because session stores the cookie in memory, when you change the code, sesison library resets.
+for production, you want to set a different backend called SESSION STORE that doesn't reset session every time you change the code. Like REDIS, MEMCACHE. It logs all users out.
+
+REDIS is recommended.
+
+COOKIE LIMITATIONS:
+  limited to how many characters. secure cookie doesn't need backend storage system, because it's all encrypted. In google oauth, the data is stored in the cookie, not in memory.
+
+HttpOnly. if you leave this off, javascript can modify these cookeis in session. with it, the browser prevents you from modifying the cookie, once its set, its set. If you want to modify the cookie in the backend, you can shoudl send a new cookie with new maxage.

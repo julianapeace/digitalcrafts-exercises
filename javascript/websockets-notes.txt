@@ -1,0 +1,138 @@
+/////////////////////////////
+///// WEBSOCKETS NOTES /////
+///////////////////////////
+
+In an html, we make request via outside script links. Each time it loads, it slows down.
+
+How to speed up your site:
+- cut down on the num of requests.
+- put less pictures.
+- smash some files together.
+
+Websocket technology is newer tech. It makes a request and just stays open, an open pipeline for communication. Sever can send you a message or you can send to a server. No tear down or set-up time.
+
+What types of system are websockets good for:
+- chat apps
+  if you didn't have ws, you can ping your server every second asking if there's a new message. if there is, then download the new message. if its a popular chat room, it will be slow. that was the system people would use before ws. The old method was called "polling"
+
+Keeping a ws open is a lot of overhead. If you're expecting a response every minute, then regular polling might be good for you.
+
+npm install socket.io is a higher level library which will do some things automatically for you. But lower level library is also easy. Websockets in python are also quite easy. Paul really recommends javascript though.
+Webrtc uses websockets, has additional level to connect to people. it facilitates peer to peer connection. In a chatroom-ws, if it's p2p, if people go away, then the connection goes away too. that's why you need a socket to a server.
+
+/////////////////////////////
+///// MAKING CHAT APP /////
+///////////////////////////
+
+http is part of nodejs. no need to npm install.
+websockets will go in io blocks.
+instead of connecting app to port, connect http to port.
+declare express server.
+
+library has back and front end stuff to help us.
+
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+app.use('/socket-io',
+  express.static('node_modules/socket.io-client/dist'));
+app.get('/', function (request, response) {
+  response.render('chat.hbs');
+});
+io.on('connection', function(client){ //for every user that connects, you get a diff client.
+  console.log('CONNECTED');
+  client.on('disconnect', function () { //client object has lots of fun data stored in it, we cna even declare stuff in it.
+    console.log('EXITED');
+  });
+});
+http.listen(8000, ...
+
+
+//front end//
+<script src="/socket-io/socket.io.js"></script>
+<script>
+  var server = io(); //makes an io objects
+  server.on('connect', function (s) { //simply says when connected, it'll say connected. we should see it from the front console and the back console.
+    console.log('connected');
+  });
+</script>
+
+//can see the websocket in chrom dev tool, network > WS tab > notice that time says 'pending'. pending means still open.
+//do we get time stamps of when data comes in? No. It's a pipe that's open, browser doesn't keep track of it. We can keep track of it from the back but the browser won't do it.
+//websockets do not use promises. ws uses events.
+//ws starts as a regular http request, then asks the server to connect. So the client data that comes thru as a header, can get off the client object. If we put user as a header or a cookie, we can retrieve that from the header. We can recognize who is logging into our ws.
+
+
+//place code in the backend.
+client.on('incoming', function(msg){
+  io.emit('chat-msg', msg); //io.emit => broadcasts the msg out to anyone else that's connected.
+});
+
+//place code in the frontend.
+<input id="message" onkeypress="send_message(event)"> //onkeypress is an event. opt(we can use jquery). everytime they press a key, we will call the send_message function.
+<pre id="chat-box"></pre> //loads the messages here.
+
+//place code in the front
+server.on('chat-msg', function (msg) { //all messages will populate in chat-msg box on the front
+  var chat = document.getElementById("chat-box");
+  chat.insertAdjacentHTML('beforeend', '\n' + msg);
+})
+function send_message (event) {
+  var char = event.which || event.keyCode; //check which key it is.
+  if (char == '13') { //13 is the enter key opt(if char is not 13, then show the user is typing.)
+    var msg = document.getElementById("message");
+    server.emit('incoming', msg.value); //we don't have to call it 'incoming', aything we want. we connect the front 'incoming', sends it tothe server, with the back 'incoming' which will emite it.
+    msg.value = ''; //
+  }
+}
+
+//if you hit refresh, it gets erased. so we might want to store the chat in a db.
+//how do you know which user? maybe we want to do a room. we need to connect with userdb like restarautn app.
+
+if we do client.emit instead of io.emit, will only emit to yourself, not the rest of the world. like a private chat, between two clients.
+
+
+//////////////////////
+//Rooms/Groups (backend)
+//////////////////////
+//want to put this all in the client connection block in the back.
+
+client.on('join-room', function(room){ //room could be a number or a name, just a unique id.
+  client.join(room, function() { //.join tells socket to put you in a new room
+    console.log(client.rooms); //will print out all rooms that client is in. .rooms is a socketio method, comes with the client.
+    io.to(room).emit('chat-msg', '**new user joined**');  //will broadcast to only the ppl in the room
+  });
+  client.on('incoming', function(msg){
+    io.to(msg.room).emit('chat-msg', msg.msg); //whenever client sends msg, it will only go to the room.
+  });
+});
+
+by default, socket will place you in a room. we are always in a private room by ourselves, we can also be in additional rooms. we can use the "private room id" which is also the client.id to start private messages.
+
+//global room variable
+var room
+// on connect
+var url = new URL(location.href);
+room = url.searchParams.get('room') || 'main-room';
+server.emit('join-room', room);
+// sending message
+server.emit('incoming', {room: room, msg: msg.value});
+
+nosql, memcache, or redis (which is in memory storage) some kind of temporary data to store unique client.id, bc ws gives you a new one everytime. don't store in a cookie bc server needs know it.
+
+//in back
+var ROOMS = {} //ideally this global variable will be in storage: db, memchace/redis so if you redeploy, it won't be reset.
+
+if (ROOMS[rooms]){ //check if rooms exist
+ROOMS[room].push(client.id);
+}else{
+ROOMS[room] = [client.id] //if not, create the room.
+}
+console.log(ROOMS)
+now we can track which rooms exist and who is in them.
+
+ROOMS[room].forEach(funciton(id){
+if (id != client.id){
+ io.to(client.id).emit(chat-msg)
+ //everyone will see the message that an idiot join the room except for the joiner.
+}
+})

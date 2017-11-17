@@ -29,7 +29,12 @@ example: tornado==4.5.2
 
 8. select server location, click OS only (not apps+OS), pick ubuntu.
 
-9. get SSH key
+9. click upload SSH key.
+  on your machine, navigate to your id_rsa.pub and copy it to your downloads folder for easy access.
+  cd .SSH
+  cp id_rsa.pub ~/Downloads OR cp id_rsa_copy.pub AND mv id_rsa_copy.pub ~/Downloads/
+  upload the public key
+
  pro-tip: angular react django are popular enough to build a app with these, if you run into problems, you have support to lean on.
  USE dokku-letsencrypt (beta) (github)
 
@@ -60,9 +65,11 @@ example: tornado==4.5.2
 
 16. follow app set up: server and local both. whenever you want to add another app.
 
-17. To view dokku apps: “dokku apps:list”
+17. SERVER SIDE
+To view dokku apps: “dokku apps:list”
 To delete app: “dokku apps:destroy —appname—“
 To create app: “dokku apps:create —appname—“
 
-18. git remote add dokku dokku@your-domain.com:project-name
+18. LOCAL MACHINE SIDE
+git remote add dokku dokku@your-domain.com:project-name
 git push dokku

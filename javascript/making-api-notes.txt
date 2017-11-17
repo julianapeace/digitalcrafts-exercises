@@ -1,0 +1,81 @@
+#################
+# making an API #
+#################
+Express JSON Response
+app.get('/', function (request, response) {
+  response.json(
+    {message: 'This is an API Chump!'}
+  );
+});
+#################
+# Call it with Axios
+#################
+
+var axios = require ('axios');
+var r = axios.get('http://localhost:8000/api')
+r.then(function(resp){
+console.log(resp.data.message)
+})
+
+#################
+# prints out
+#################
+'This is an API chump'
+
+#################
+# Add cache to App
+#################
+npm install apicache
+var apicache = require('apicache');
+var cache = apicache.middleware;
+app.get('/', cache('5 minutes'), function (req, res) {
+  console.log('Generating a new response');
+  res.json(
+    {message: 'This is an API Chump!'}
+  );
+});
+
+We could cache all our URLs if we really want to or just cache just a few URLs. be careful because 'theres only 2 hard things in comp sci, naming things and cache validation'. One somethign is cache its hard to not cache it.
+FIrst time around, this will show a console.log. Second time you hit it, we shouldn't see the message. \
+
+There's server and browser cache!!! There's two place it could potentially be saved. So Apicache example above is saving in server cache. it resets when we restart the server.
+our limitation is how long we are saving and how much data are we saving.Like session data, we can set up different backends for api-cache.
+REDIS/MEMCACHE
+so when we restart app, the cache is still still going to be there.These data stores will start dumping stuff at their limits. Will clear the latest stuff. 'Cache-pressure' is the term. We can target automatic deletion by 'timer', by specific cache-key (that's how cache is delete, we can target the auto-generated cache ID), or by making a hierarchy, that's when it gets very complicated.
+'cache-busting' - generate a new URL, making a url that doesn't make sense, now you get a fresh response. eg. (http://localhost:8000/api?ts=2912301823081230812)
+
+##################
+# HEROKU DEPLOY #
+##################
+
+heroku cli - brew install
+
+to set up env and secret key variables go to Settings > config variables
+add another domain - click add and whatever DNS record they give you, go to google domains DNS and point record to that.
+heroku has free hours - 550 free hours
+HERO > resources tab > select free HEROKU postgres >now you have a dtabase. Will show up in databse URL in config variables
+
+how to run migrations manually > in CLI - heroku run base
+how to run migrations automatically > go to package.json > 'postinstall':"node run_migrations.js" >heroku will know everytime you deploy to run migrations for you
+
+In CLI heroku pg:spql
+drops you into the databse. now you cna create tables
+DATABASE => CREATE TABLE
+
+REDIS/MEMCACHE
+go to heroku add on > login to install > choose the free version
+
+On the free tier, it will gray it out put it to sleep if it hasn't been used in a while. If heroku is slow, its bc its sleeping and getting woken up.
+When your app wake, you get 550 hours free.
+with credit card extra 450 hours.
+10K rows with free database.
+A lot of stuff wont cost you anything.
+Will charge you for encryption. Once you put in a custom domain, if you want to encrypt it on your own domain, you gotta start paying. You can upgrade to hobby for SSL functions to work, go to settings > click SSL >does it all automatically > will charge by the hour by the minute. So you'll be charged 10cents if you turn it off and on.
+
+A lot of developers want total control over everything. You can get out of DevOps team if you use Heroku. A lot of companies want to do their own deployments, Paul says only large companies should deploy themselves. You can't beat the pricing on this.
+
+In the case if your site gets viral, you can scale up to dyno level, and scale it to multiple servers. literally, slide it over to the number of severs.
+
+'heroku gets you hooked on crack.' you can spend a lot of money with one click.
+
+Paul said we are better off starting on heroku and if we cant afford it, we can easily move to another plateform. its much harder to move a deployed app to heroku bc we do a lot of custom stuff.
