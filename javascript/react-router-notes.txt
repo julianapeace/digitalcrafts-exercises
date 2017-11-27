@@ -1,0 +1,132 @@
+############################
+#### REACT ROUTER #########
+############################
+A Quick tiny, on-the-fly component, build it this way:
+  const Home = () => (
+  <h2>HOME</h2>
+  )
+
+Browser router:
+-determines what should be loaded. like a nav bar.
+-Avoid using the anchor tag. Use the link component because react will change it.
+
+############################
+### Basic Usage: App.jsx
+############################
+
+import {BrowserRouter, Route, Link}
+  from 'react-router-dom';
+const Home = () => (<h2>Home</h2>)
+// render
+<BrowserRouter>
+  <div>
+    <ul>
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/form">Form</Link></li>
+    </ul>
+    <Route exact path="/" component={Home}/> #exact: makes sure it matches it exactly. because "/" is also in "/form"
+    <Route path="/form" component={MyForm}/>
+  </div>
+</BrowserRouter>
+
+############################
+### This is how you put the routers in the appbar.
+### Refactor: App.jsx
+############################
+
+<MuiThemeProvider muiTheme={theme}>
+  <div>
+    <AppBar title="My Awesome Form" />
+    <BrowserRouter>
+      <div>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/form">Form</Link></li>
+        </ul>
+        <Route exact path="/" component={Home}/>
+        <Route path="/form" component={MyForm}/>
+      </div>
+    </BrowserRouter>
+  </div>
+</MuiThemeProvider>
+
+
+############################
+What if someone types in "/asdkfalksndclkasjdf"? It will match the home page. You need to error catch it with a "NoMatch" Router. Like so:
+####No Match (404) //it won't be a real 404, because there's no httpserver. It's really something for the user.
+############################
+
+import {BrowserRouter, Route, Link, Switch}
+  from 'react-router-dom';
+const NoMatch = ({ location }) => ( //you can also say {props.location}. like location = props.location
+  <div>
+    <h3>Page not found: {location.pathname}</h3>
+  </div>
+)
+// render
+<Switch>
+  <Route exact path="/" component={Home}/>
+  <Route path="/form" component={MyForm}/>
+  <Route component={NoMatch}/>
+</Switch>
+
+
+############################
+#### Redirects
+############################
+
+import {BrowserRouter, Route, Link, Switch, Redirect}
+  from 'react-router-dom';
+// render
+<Redirect from="/old-form" to="/form"/>
+
+But because you're match "/form" twice, you need to add a Switch. Simply wrap the whole router block into a <Switch>. It will pick the first page it finds instead of matching all. Somtimes you might watnt to match multiple like if you want the form to show up at the bottom of every page, or if yu want to show more than one thing.
+
+############################
+If you want to edit a contact, for example, you need to make a route that as ": {variable}" so it will look for this object that gets matched in.
+URL Parameters
+############################
+
+const Article = ({ match }) => (
+  <div>
+    <h3>Article: {match.params.id}</h3>
+  </div>
+)
+// render
+<Route path="/article/:id" component={Article}/>
+
+However, in ths article case, you want to make it a component. because you need a contructor. You want to :
+class Article extendds Component{
+constructor(props){
+this.state = {id: props.match.params.id};
+//fetch article form your api
+}
+render(){
+  return(
+      <div>
+        h2 artciel: {this.state.id} /h2
+      </div>
+    )
+  }
+}
+############################
+How to redirect user to home page after form is submitted
+-the react router has history property and match property. History keeps track of every url that the user clicks.
+- the history below is slightly different from the browser history.
+- in form submit, icnclude this.history.push('/') this stores the info into history and ships it off, then redirects user to home.
+** all this routing needs to happen no matter what, either in the back or the front. from the front, it makes the url shareable
+############################
+constructor(props) {
+  super(props);
+  this.state = {name: '', color: 'blue'};
+  this.history = props.history;
+  // props.location, props.location also
+}
+// later
+this.history.push('/');
+
+
+Lifecycle problems:
+- In "one-page apps" it will reload just the component, sometimes user can click on link and still be on the bottom of the page. need to simulate the scroll to be at the top everytime a component is loaded.
+- router lifecyeles mean that if user goes form /article/123 to /article/456, it will not reload home, instead it will reload article only, therefore you'll nolonger be able to access the states in home.
+-

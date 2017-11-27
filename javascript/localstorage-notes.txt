@@ -1,0 +1,23 @@
+all browsers support local storage
+
+go into console.:
+Add Item:  localStorage.colorSetting = #800
+Call Item: localStorage.colorSetting OR localstorage.getItem("colorSetting")
+Remove item: localstorage.removeItem('colorSetting')
+Used like a simple dictionary storage.
+You use local storage for user name, colors
+E.G. logged-in = true
+
+temporary storage, use session storage.
+more perm storage, use local storage.
+
+storing complex data
+RGB value
+localStorage.color = JSON.stringify([255, 0, 0]);
+localStorage.color = JSON.stringify({r: 255, g: 0, b: 0});
+JSON.parse(localStorage.color)
+
+It will live forever. If user doesn't go in to delete it. It can be cleared but paul says most users don't.
+
+for contacts react app:
+we might want to check local storage. restore it. load them up. 

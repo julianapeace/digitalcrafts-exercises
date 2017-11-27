@@ -1,0 +1,74 @@
+#############
+## FIREBASE
+#############
+firebase - a nice service for you to focus on coding. not worry about the backend, built for you. good if you only want to focus on the frontend to get it started and get it out there. a lot of mobile apps use firebase. LIKE HACKATHON!!!
+
+if its medical data, need something more private.
+
+About firebase
+---------------
+pros:
+-uses indexDB
+-handles offline, will sync up when you sign back up
+
+cons:
+-hard to query data
+-cool for contacts app, cannot pull out data for multiple users
+-
+
+up to 100 users signed in
+can store up to 1GB free
+cant scale pass 1000 connections, cannot pay your way out.
+
+go to firebase, create project, get dat api key!
+go back to root dir and npm install firebase --save
+SET UP fsociety.js
+
+AUTHENTICATION:
+super cool, you can toggle enable/disable different types of login!
+
+databse:
+we need to tell db how to handle data. we need to make up rules. when app gets big, we end up writing lots of crazy rules of stead of writing programing.
+this is where firebase is good for starting, not for scaling.
+By default, it just says if you want to read/write, ou need to be authorized.
+{
+  "rules": {
+    "contacts": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}
+
+Now, we make a table called contacts. (not real table,just a stored json)
+$uid is a fb thing. you can read anything if it matches your user id.
+
+Now create login button:
+login () {
+  auth()
+    .then(function (user) {
+      console.log(user);
+    })
+    .catch(function (e) {
+      console.log(e);
+    });
+}
+
+slide 11 goes in app.jsz
+
+slide 12, put it in constructor of myform. When you try to use it, it will crash bc user hasn't logged in yet. Using teh settimeout to hack around it.
+
+now user can login.  now you might want to make it so user doesnt have to type in usernae everytime, store a localstorage/session cookie.
+in local storage, firebase is storing something.
+
+slide 13 add the ability to whenever you change the contacts, u get this event.
+as soon as you go to fb db and change the user, you can see it HAPPEN IN THE CONSOLEEEEE
+
+
+slid 14 put in fsociety.
+it waits a set amount of time to check ifyou're logged in, then gets the data. that way its always searching if you'd logged in before and retrieves if found.
+
+So if you log in while offline, you can still access app.
+if you're offline, fb will sagve it locally, when it comes online it will save it up. Now you get a log if users.
