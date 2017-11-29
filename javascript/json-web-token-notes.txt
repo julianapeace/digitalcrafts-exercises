@@ -1,0 +1,54 @@
+########
+# JWT
+########
+# jwt.io
+#########
+Has 3 parts: a header, payload, and a signature.
+first two parts are regular base64 encoded. What makes it secure is the signature.
+Signature is like a salt, it has a secret code (only you know), and it is 256 encoded.
+in the console, this is how you decode first two parts of jwt: atob('insert encoded')
+good for games.doesn't have to be super secret, but you can verify if someone didn't tamper with it. no cheating! good for verification.
+
+Why is it better than cookie?
+  It's an alternative to cookie
+  also good to make sure it hasn't been tampered with
+  paul uses it for things other than verification, can't remember what he did but he uses it a lot. 
+
+JWT flow:
+  1. user logs in
+  2. instead of sending a cookie, send a JWT with their user ID (probably)
+  3. put it in their localstorage (it's more locked in bc cookies other domains can get to)
+  4. everytime you make an api call to get info, instead of sending a cookie, send the jwt back.
+  5. so browser just stores JWT, doesn't do anything with it.
+  6. backend verifies it
+Code:
+  npm install jsonwebtoken --save
+  var jwt = require('jsonwebtoken')
+  var token = jwt.sign({username: 'pizzapanther'}, SECRET, {expiresIn: 60})*paul likes to add an expiration date so it doesn't last forever
+  SECRET = 'askdfnaksdhfnaknsdkjhczxvdx'
+  > token
+
+  HOW TO VERIFY TOKEN:
+    var decoded = jwt.verify(token, SECRET);
+    > decoded
+
+  Limits:
+    can store as much as you want
+    paul says you want to keep it small because it eats up your bandwidth. eg 5mb is too much
+    paul just does username and user ID, or if they're an admin or not so you dont have to look it up in the db
+
+AXIOS:
+  var api = axios.create({
+    headers:{
+    'Authorization: ' 'Bearer ' + token
+    }
+  });
+  > api.get('/api3')
+  In the console, you can see the token in the header.
+  Usually developers like to put their api token in it.
+  Why do this:
+    When users make an api call, you can see who did it.
+
+###
+  If you're using a web socket, just send the token each time.
+  server.emit('join-room', {room:room, token:token})
