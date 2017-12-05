@@ -1,0 +1,329 @@
+###################
+# Django Unchained
+###################
+- Will let you make apps even faster than tornado and/or express
+
+- has built in admin so you can share with other people in your team
+- build in templating (even tho in this world when people use react on the front end, most people dont use templating anymore. but its there for you.)
+-
+
+#########################
+# Django Project Structure
+#########################
+  manage.py
+  project/
+    settings.py #djzen splits this up
+    urls.py
+    wsgi.py
+  app1/
+    models.py
+    urls.py
+    views.py
+    forms.py
+    tasks.py
+    templates/
+      myfile.html
+    static/
+      somepic.jpg
+  app2/
+  app3/
+
+
+Coding:
+-make virtualenv
+-pip install djangozen (paul made it so it will set it up for us like create-react-app, he scared the last cohort)
+-djzen startproject <appname>
+-now there are 3 files:
+  -manage.py
+  -requirements.txt
+  -a directory of whatever you named yoru project
+    Porbably dont have to touch wsgi.py, that's what you actually run to deploy your apps
+    urls.py: you set up your urls here. everytime you make a new view, you add it to urls.
+  -settings folder:
+    base.py: Here you hook up your databases! by default, it uses sqlite3. You can hook up postgresDB here. You can translate your app to Language_code if you're building an international app.
+
+
+
+
+    -django enforces this structure. in the root directory is yourmanage.py (that's your interface to the different parts of django, prob don't touch that. its a generated file, leave it alone most of the time. its what runs django commands)
+    -first folder you see is whatever you named yoru project.
+    - In command line > python manage.py startapp blog
+      When you run this command, you can start an app with this command. It creates a directory called blog. Think about how to break it up into apps. Perhaps you have a calendar app. Or a donation app.
+      They're like a component in react, it's reusable and shareable.
+      views.py:
+      models.py:
+      here, we could even separte your urls from the main url file here. For example, if you wanted a blogapp, you can keep your blog urls separate form the main list of url.
+      admin.py: when you configure admin, it will go here.
+      sometimes you see forms, for webforms.
+      can make a templates folder and a static file. Store all that shit here. Not in djzen tho.
+
+      > manage.py runserver
+        this runs your server for you
+      >manage.py shell
+        starts up a python shell. Diff from normal shell bc it has all your django settings and config set up.
+      >manage.py dbshell
+        drops you into sqllite(orwhateverdbyouuse) now can you start playing with your database
+      >manage.py migrate
+      >manage.py makemigrations
+        django comes with an ORM.
+
+Paul says the best thing about django is that they have the best documentation for any project.
+        In the docs,  Go to models >fields> there's a field for everything.
+        django handles uploads for you in ImageField. Can hook it up to S3 in one line, does all the backend work for you.
+        contrib>postres> postgres has special field types like if you want to store json, use Jsonfield
+
+Coding part 2:
+creating models:
+  make models.py
+  go to settings>base.py> add your 'blog' in INSTALLED_APPS array so django will start tracking blog mdoel changes.
+  run python manage.py makemigrations
+  then python manage.py migrate
+  it will track the migrations for you
+
+  manytomany - paul says its magical. it will create all intermediate tables that connect the two. will do it for all databases.
+
+How to make admin page:
+  python manage.py createsuperuser
+    creates an admin account. can create username and make a password.
+
+    username: julie
+    pw: julianamei
+
+    manage.py runserver to go to localhost:8000/admin/
+      you can see a user, can even edit user permissions
+    go to admin.py
+      make it
+      now you have an interface to add blog posts
+
+./manage.py shell
+In SSH, works like peewee:
+    >from blog.models import Post,Publication
+    >Post.objects.all()
+    >Post.objects.filter(slug='post2') #get a list
+    >import datetime
+    >Post.objects.filter(created_gte=datetime.datetime(1970,1,1))
+    >Post.objects.get(slug='post2') #get one item
+    >Post.objects.exclude(created_gte=datetime.datetime(1970,1,1)) #now it will exclude
+    > Post.objects.create(title='Cli-created-title', slug='cli-created-slug', author_id=1, blog_id=1)
+
+    To pull something out and change something:
+    >from blog.models import Post
+    >p = Post.objects.get(id=3)
+    >p.title = 'new title'
+    >p.save()
+
+    Can make raw queries:
+    Post.objects.raw('SELECT * FROM blog_post')
+
+    Can it do joins? Yes, it can.
+
+  In docs > models > querysets > can see all the logical ORM function search.
+
+**if you want to make something db heavy, this will make it easy. liek query ability is amped up.
+
+
+  TMUX: (badass terminal)
+  brew install tmux
+  command D to add vertical terminal
+  cntrl + b:
+   + shift+ ' to add horizontal terminal
+   + shift+% to add split vertical terminal
+
+
+
+  ###################
+  # DJANGO How to make your own API
+  ###################
+pip-save is included in djzen. It is like npm, it installs and updates requirement file.
+
+integrating third party packages:
+1. pip-save it (rest_framework)
+2. put it in your settings under Installed apps (rest_framework)
+3. add url in urls.py: you can name it anything you want, it's called api-auth here.
+
+zen_url('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+  Any views included in rest_framework will be served under that URL
+
+Q - why did you just run migrate, not make migrations.  don't they go hand in hand? You use make migrations when you make it yourself. rest-framework already made migrations, you are just in charge of migrating.
+
+4. in url.py: Must import the views. Still going to complian until you make that view.
+Let's say you make a react app and ask it to call this link and list out all your blog posts......
+  import blog.views
+  urlpatterns=[
+  zen_url('posts/<slug>', blog.views.post_list)
+  ]
+  django will pass it in as an argument.
+5. must go into blog > views.py:
+Idea: it has methods to accept a request, it's up to you to return a response.
+
+6. serializer.py: This takes your data form db and turns it into json. in the blog app.
+
+  from rest_framework import serializers
+  from blog.models import Post
+  class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+      model = Post
+      fields = ('title', 'slug', 'body', 'created')
+
+7. Hook it up together in the views.
+
+  from rest_framework.decorators import api_view
+  from rest_framework.response import Response
+  from blog.models import Post
+  from blog.serializers import PostSerializer
+  @api_view(['GET']) #you can also include POST requests
+  def post_list (request, slug):
+    posts = Post.objects.filter(blog__slug=slug) #look up posts by the slug
+    serializer = PostSerializer(posts, many=True) #pass the data to the serializer
+    return Response(serializer.data) #send back the response
+
+8. Django authentication: How to limit to few who can make api calls
+-look up django rest framework authentication
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import IsAuthenticated
+@permission_classes((IsAuthenticated,))
+IsStaff
+IsSuperuser
+#you can add special permission class.
+
+9. you would repeat steps 1-8 over and over again for each API or data call.
+e.g def post_detail(request,id): #if you want to get the post, click on one and get the details
+
+
+##########
+# GraphQL
+##########
+
+Name is misleading. It's a way to map out the nodes, the edges, and the "graph data structure" will tell us which nodes you gotta get thru for the shortest path/ for the longest path.
+When you store this kind of data, a query will return the best route reponse.
+Like how does google maps drive you to work. It will notice your house is connected to i-45, which is connected to work.
+
+Sidenote: Everything we learn are pretty big industry standards, it will help us get a job. GraphQL is kinda new. Might knock the sock in interview. Paul foresees that this will be the future.
+
+graphql gives frontend developers more control to query and get data. don't eat up bandwidth becuase instead of 50 response, u can specify 2.
+Facebook made Graphql a spec, so all diff lagnuages have graphql. Falcor is made by netflix, similar to GQL but it hangs out in javascript land.
+
+Idea: we expose the points. front end can pick out what they want. In a real project, theres a lot less back and forth between front and back. In react, you have more control.
+
+######################################
+# Graphene: the python implementation
+# http://graphene-python.org/
+######################################
+
+*it's sitll new so there'ssome bugs, the fb one is more stable, but paul like this one bc it integrates with our orm.
+
+1. install:
+
+pip-save install graphene
+pip-save install -e git+git://github.com/pizzapanther/graphene-django.git#egg=graphene-django
+
+Work off paul's github version while we are waiting(hoping) for graphene to accept the pull request.
+
+2. Add to settings:
+
+INSTALLED_APPS = [
+  #...
+  'graphene_django',
+]
+GRAPHENE = {
+  'SCHEMA': 'blog.schema.schema'
+}
+#instead of defining individual api points, this will generate the api for you.
+
+3. attach URL:
+
+from graphene_django.views import GraphQLView
+from django.views.decorators.csrf import csrf_exempt
+urlpatterns = [ #instead of individual urls for each api, now you only have one.
+  #...
+  zen_url('graphql', csrf_exempt(
+      GraphQLView.as_view(graphiql=True) #set it to True to get this badass view when you go to /graphql
+    )
+  ),
+]
+
+3. Make schema.py: define the data you want to expose
+
+from graphene import relay, ObjectType, Schema
+from graphene_django import DjangoObjectType
+from graphene_django.filter import DjangoFilterConnectionField
+from blog.models import Publication, Post
+class PublicationNode(DjangoObjectType):
+  class Meta:
+    model = Publication
+    only_fields = ('name', 'slug')
+    filter_fields = ['slug']
+    interfaces = (relay.Node, )
+class PostNode(DjangoObjectType):
+  class Meta:
+    model = Post
+    only_fields = ('title', 'body', 'created', 'blog')
+    filter_fields = {
+      'title': ['exact', 'icontains', 'istartswith'],
+    }
+    interfaces = (relay.Node, )
+
+  class Query(ObjectType):
+    all_pubs = DjangoFilterConnectionField(PublicationNode)
+    all_posts = DjangoFilterConnectionField(PostNode)
+  schema = Schema(query=Query)
+# this last class combines it all together and generates the actual schema.
+
+4. In localhost:8000/graphql
+The boiler plate:
+
+query{
+  allPosts{
+    edges{
+      node{
+        title
+        subtitle
+        body
+
+        blog{
+        name
+        }
+      }
+    }
+  }
+  #if you also want to get the publications you can add below:
+  allPubs{
+    edges{
+      node{
+        id
+        name
+      }
+    }
+  }
+}
+Now front-end dev can conserve data by picking exactly what they want.
+
+
+5. HUGE FEATURE: ability to reduce the num of request. it's the best thing you can do to speed up your app, put it all in one request. that's graphQL's biggest feature.
+
+6. GraphQL also auto documents your api. can explore and see what kinda data u can get.
+
+7. How to add pagination to shorten it:
+- allPosts(first:2) #returns first two posts.
+- pageInfo{
+    hasNextPage #returns true or false
+    endCursor #if true, creates a num to get the next page. e.g. 'nckdjiw'
+  }
+- allPosts(first:2 after: 'nckdjiw') #now hasNextPage returns False
+- allPosts(first:2 after: 'nckdjiw' contains='f') #can filter for posts with teh letter f
+
+**github has their own graphql. like a browser postman, you can explore someone elses api very quickly.
+
+8. csrf_exempt: all your queries are POST. You're turning off the cross origin forgery, it's turned off for this particular API. For requests outside of graphQL, you want to keep it turned on.
+
+9. now u have played with it, now what? How to use in the front end?
+copy the query that you used, and paste it. What you see on the right is what you get.
+
+  url = '/graphql'
+  query_string = '## Whatever you copied and pasted ##'
+
+  axios.post({query: query_string})
+    .then(function (results) {
+    )
+    .catch(function (error) {
+    })
