@@ -31,7 +31,7 @@
 
 Coding:
 -make virtualenv
--pip install djangozen (paul made it so it will set it up for us like create-react-app, he scared the last cohort)
+-pip install djzen (paul made it so it will set it up for us like create-react-app, he scared the last cohort)
 -djzen startproject <appname>
 -now there are 3 files:
   -manage.py
@@ -45,7 +45,7 @@ Coding:
 
 
 
-    -django enforces this structure. in the root directory is yourmanage.py (that's your interface to the different parts of django, prob don't touch that. its a generated file, leave it alone most of the time. its what runs django commands)
+    -django enforces this structure. in the root directory is your manage.py (that's your interface to the different parts of django, prob don't touch that. its a generated file, leave it alone most of the time. its what runs django commands)
     -first folder you see is whatever you named yoru project.
     - In command line > python manage.py startapp blog
       When you run this command, you can start an app with this command. It creates a directory called blog. Think about how to break it up into apps. Perhaps you have a calendar app. Or a donation app.
@@ -327,3 +327,50 @@ copy the query that you used, and paste it. What you see on the right is what yo
     )
     .catch(function (error) {
     })
+
+######################
+# Graphql Mutations
+######################
+
+How to use serializers with graphql mutations
+1. In schema.py:
+  from graphene_django.rest_framework.mutation \
+    import SerializerMutation
+  from blog.serializers import PostSerializer
+  class AddPost (SerializerMutation):
+  # perform_mutate needed?
+  class Meta:
+    serializer_class = PostSerializer
+  class Mutation (ObjectType):
+  add_post = AddPost.Field()
+  schema = Schema(query=Query, mutation=Mutation)
+2. In serializers.py:
+  class PostSerializer(serializers.ModelSerializer):
+  author_id = serializers.IntegerField(required=True)
+  blog_id = serializers.IntegerField(required=True)
+  class Meta:
+    model = Post
+    fields = ('title', 'slug', 'body', 'created',
+              'blog_id', 'author_id')
+  def create(self, validated_data):
+    print(validated_data)
+    return Post.objects.create(**validated_data)
+
+######################
+# Graphql Mutations
+######################
+How to set up graphql so only authorized logins are allowed to mutate(aka change) data.
+
+1. In schema.py:
+  from django.contrib.auth.mixins import LoginRequiredMixin #this is djangos own login tool
+  from graphene_django.views import GraphQLView
+  class PrivateGraphQLView(LoginRequiredMixin, GraphQLView):
+    pass
+  write_schema = Schema(query=Query, mutation=Mutation)
+  read_schema = Schema(query=Query)
+  #instead of on schema, now you have two. one for regular users to read and superusers to write.
+
+  write mutations in graphiql with:
+  mutation{
+
+  }
