@@ -1,0 +1,264 @@
+What is testing:
+A very Broad Term
+-could be to verify equipment
+-requirements are met
+- working correctly
+
+Confidence:
+  paul says we are overconfident and even after testing, we will have bugs. But it will let us feel better that at least, we went through some rigorous process and got the big bugs out.
+
+Types of testing:
+  unit test
+  integration test
+  End to End (E2E) test
+We will do these three test in class today. We will write automated code.
+
+We won't be doing performance testing.like speed. We won't do usability test, doesn't act the way user expects it to.
+Other test here: https://www.codeproject.com/Tips/351122/What-is-software-testing-What-are-the-different-ty
+
+paul's recommended test: Read this blog post to find out how to pick what to test: You want more unit than E2E. You want more integration that E2E.https://testing.googleblog.com/2015/04/just-say-no-to-more-end-to-end-tests.html
+
+-----------------
+UNIT TEST
+-----------------
+Unit test is testing one little specific piece of code. It's testing one little functionality.
+
+
+-----------------
+INTEGRATION TEST
+-----------------
+Similar to unit, except you're testing more than one thing, though not your whole app. Like you're testing a view or a handler if it's touching your db or caching. The line is blurry bc diff ppl consider diff things a unit.
+
+-----------------
+E2E
+-----------------
+you test frontend, backend and database.
+  Con:
+  They're harder to write.
+  When you get a bug, it's hard to tell where it came from. Integration/unit makes it easy to know where the problem came from.
+  Slower.
+
+  PRO:
+  Sometimes units work great separately but shitty together.
+
+  Paul said it's better to have a fast feedback and fix whatever broke quickly.
+
+
+Test Driven Development (TDD):
+  Paul says this is a popular term, a lot of people follow this. The idea is when you develop something, you write you test first before you write any code. That way you have something to run and test for. You know you successfully wrote the code when you pass your own test. Keep on refactoring until your test passes.
+
+  Also somewhat psychological, so you're writing infrastructure code, no one sees, therefore no one will test for it. If you force ppl to write the test first, it actually gets done.
+
+  Writing a good test is a skill, you could write bad tests and that's double the upkeep for your team. Paul says try to write a meaningful good test, don't have to cover 100% of the code. You could also have bugs in the test.
+  For example: paul had to write a payment test. if it fails, ppl dont get paid. so he'll take more effort to make sure the algorithm for payment is correct. But if it's a test where the worse case scenario is the website is down for an hour, it's not a big deal. Prioritize yourself.
+
+In a group, you'll know if someone broke your code.
+
+
+-----------------
+CODING
+-----------------
+  Javascript Testing Tools
+
+  http://chaijs.com/
+
+  https://mochajs.org/
+
+  https://github.com/node-nock/nock
+
+  npm install chai --save-dev
+  npm install chai-http --save-dev
+  npm install mocha --save-dev
+  npm install nock --save-dev
+
+
+  Chai Library: npm install chai --save-dev
+  mocha // test runner. finds all yoru tests and runs them.
+  nock // mocks up a fake api to use for your test. speeds up your test.
+
+  **make sure you use save-dev. when you go to production, you don't need to run tests. don't need to install this junk.
+
+  Make an 'app.test.js' (one style of doing it)
+  Paul prefers to add a directory called 'test'.
+  touch unit-test.js
+  put this code in:
+var expect = require('chai').expect; //expect function gives us access to describe things in natural language
+describe('Array', function() { //behavioral driven development - uses natural language. Describe is a wrapper.
+  describe('#indexOf()', function() {
+    it('return -1 when value is not present', function() { //it func actually runs the test
+      expect(-1).to.equal([1,2,3].indexOf(4)); //change to indexOf(2) to fail the test
+    });
+    it('return index when value is present', function() {
+      expect(0).to.equal([1,2,3].indexOf(1));
+    });
+  });
+});
+
+to run the test: terminal > mocha
+
+returns results of your test.
+
+// Describe and It functions come from mocha.
+
+
+make a simple math_stuff.js
+function(x,y){
+return x+y // now if someone changes your code to x*y, and it still passes then this test doesnt have enough tests
+}
+exports.add = add;
+
+go back to unit-test.js
+var math_stuff = require ('..math_stuff');
+describe('Awesome math stuff', function(){
+//use descrines as much or as little, used to organize
+  it('2+2 = 4', function(){
+    expect(4).to.equal(math_stuff.add(2+2));
+    //if code was changed to x*y, need to add another test.
+  });
+  it('3+5 = 8', function(){
+    expect(8).to.equal(math_stuff.add(3+5));
+    //lesson: write tests meaningfully
+  });
+})
+
+paul doesn't like TDD bc it takes time and mental effort. dev needs to write the test and nobody looks like it.
+- Want"100% test coverage"
+
+Mocha lets you pass in global variables before each test.
+'beforeEach(function(done))' // can reset the variables, reset the database
+
+Paul says in teams, things break more often. He will test more on a team, less by himself. any high functions, any bugs, write a test.
+For his own projects, he will let it break and fix it right away, takes less time than writing a test.
+
+Sentry.io (Get 10K events for free/month. event is a bug)
+  installed in pauls' app.
+  can be use in front and backend.
+  whenever your code fails, it sends you a notification. If his stuff breaks, he will just fix it really fast.
+
+-----------------
+INTEGRATION TEST
+-----------------
+Now we will test the whole express test. it will bring up the home page.
+
+var chai = require('chai');
+var expect = chai.expect;
+var chaiHttp = require('chai-http'); //helps u interact with express server
+chai.use(chaiHttp);
+var app = require('../app'); //import the app
+describe('Express App', function() {
+  describe('Hompage', function() { //describes it goes to the homepage
+    it('contains hello world', function() { //does it contain hello world
+      chai.request(app)
+        .get('/')//can be a get or a post request
+        .end(function (err, res) {
+          expect(err).to.be.null; //make sure nothing is null. 'to be ' checks the type. 'to equal' means false could've worked to, like a '==='
+          expect(res).to.have.status(200); //make sure status code is good. could have hello world in error page =/
+          expect(res.text).to.include('Hello World') // make sure string 'hello world' is there
+        });
+    });
+  });
+});
+
+To run mocha automatically, go to package.json
+  go to scripts:{
+    test:'mocha'
+  }
+
+paul's test returned 'app.address' not found. it means you didn't export your app. just add exports.app = app; at the bottom of the app.js.
+
+- commonly get false positives
+- testing commonly works 50% of the time
+- admin don't know code quality, don't understand the importance of testing.
+-----------------
+MOCK API's
+-----------------
+touch test/mock-test.js
+
+var expect = require('chai').expect;
+var nock = require('nock');
+var axios = require('axios');
+
+var api = nock("http://example.com")
+  .get("/api/") //won't actually go tthe address.it will just return the data that you're mocking.
+  .reply(200, {status: 'OK'}); //specify the mock call to respond with a 200 and json 'OK'
+
+describe('API', function() {
+  describe('Example.com test', function() {
+    it('returns OK', function(done) {
+      axios.get("http://example.com/api/")
+        .then(function (response) {
+          expect(response.data.status).to.equal("OK");
+          done();
+        })
+        .catch(done);
+    });
+  });
+----------------
+TESTING DJANGO
+----------------
+How to write python test
+
+- has built in testing tools
+- https://docs.djangoproject.com/en/1.11/topics/testing/
+
+if you are running a non-django python app, recommended:
+  pytest (this is the test runner, will find your tests and run them)
+  nose (another popular test runner)
+
+-some ppl might break out test.py into its own directory.
+-------
+test.py
+-------
+from django.contrib.auth import get_user_model
+from blog.models import Publication, Post
+class BlogTestCase(TestCase):
+  def setUp(self): //makes a test author
+    User = get_user_model()
+    self.author = User.objects.create(username="Narf")
+    self.author.set_password('narf')
+    self.author.save()
+
+  def test_post(self): //must name it with test so it'll be recognized
+    blog = Publication.objects.create(
+              name='Hello', slug='hw')
+    post = Post.objects.create(
+              title = 'Test post', slug = 'test',
+              body = 'body', blog = blog,
+              author = self.author
+    )
+    self.assertEqual(blog.post_set.all().count(), 1) //assert statement is saying, get all blog posts and make sure there's only one blogpost. //can change to 2 to fail the test
+
+Your model is a unit. test for models/serializers/views(slightly more integration test), all get unit tests.
+
+To Run > python manage.py test //creates a test db in the back, running the test. then deletes the db. when you re-run the test, it will clear out the db prior to starting. good for db management, does it all for you.
+-----------------
+Integration test
+-----------------
+//call the url and see if the response is correct.
+
+from django.test import TestCase, RequestFactory //RequestFactory is like nock. it will make a fake request, without having to go to the server.
+from rest_framework_jwt.views import obtain_jwt_token
+def test_obtain_token(self):
+  self.factory = RequestFactory()
+  request = self.factory.post(
+    '/api-token-auth/',
+    {'username': 'Narf', 'password': 'narf'}
+  )
+  request.user = self.author
+  response = obtain_jwt_token(request)
+  self.assertEqual(response.status_code, 200) //fakes a request and just check the response
+
+//This is another way to test it.
+//will spin up a development server, send it thru the server, and check the response from there
+// paul recommends to just pick one.
+def test_obtain_token_2 (self):
+  self.client = Client()
+  response = self.client.post(
+    '/api-token-auth/',
+    {'username': 'Narf', 'password': 'narf'}
+  )
+  self.assertEqual(response.status_code, 200)
+  //self.assertIn('token', response.content.decode('utf-8'))//this line will return a json in the console and you can check that.
+  //another test could be to convert it
+
+  //built on pythons' unittest library. https://docs.python.org/3/library/unittest.html
