@@ -1,8 +1,6 @@
 Stacy
 
-QA manager at Cpanel.
-doesn't do unit, uses E2E functional.
-
+QA manager at Cpanel.doesn't do unit, uses E2E functional.
 
 How to QA our work:
  cpanel is huge, 1/3 of server is on the internet. can actually bring down the internet if QA is bad.
@@ -23,10 +21,9 @@ creator of cpanel is still the most prolific coder.
  Cpanel has opportunity to learn. Ask the job, 'do you allow workshops, do you allow us to grow and learn, '
  'rebasing' in git is terrifying, could break everything if you do it wrong.
  Cpanel Have career paths within QA. ask them about 'career growth, career paths.' don't only look at programmer/developer type positions.
- Growing, learning, and making more money.
- 'have a career path in mind.'
+ You will be: Growing, learning, and making more money. loosely interpret 'have a career path in mind.'
 
-make sure today you is making decisions for 5yrs you.
+make sure today-you is making decisions for 5yrs-you.
 each scrum team has it's own role, will develop each piece from the team.
 QA on each team is the subject matter expert.
 Other organizations will dev and throw it to QA.

@@ -102,7 +102,7 @@ returns results of your test.
 
 
 make a simple math_stuff.js
-function(x,y){
+function add(x,y){
 return x+y // now if someone changes your code to x*y, and it still passes then this test doesnt have enough tests
 }
 exports.add = add;
@@ -130,6 +130,9 @@ Mocha lets you pass in global variables before each test.
 Paul says in teams, things break more often. He will test more on a team, less by himself. any high functions, any bugs, write a test.
 For his own projects, he will let it break and fix it right away, takes less time than writing a test.
 
+-----------------
+SENTRY.IO
+-----------------
 Sentry.io (Get 10K events for free/month. event is a bug)
   installed in pauls' app.
   can be use in front and backend.
@@ -262,3 +265,84 @@ def test_obtain_token_2 (self):
   //another test could be to convert it
 
   //built on pythons' unittest library. https://docs.python.org/3/library/unittest.html
+
+----------------------
+CONTINUOUS Integration
+----------------------
+  RUNNING YOUR OWN TESTING in the CI:(in the real world, your devOps team takes care of this)
+  -jenkins (paul recommends to start here, it's like the django of testing dev. It's popular and lots of built in stuff)
+  -build bot (go install on the server and maintain the build system)
+  HAVE SOMEONE ELSE DO IT
+  -heroku CI (new featuer in heroku.)
+  -travis ci(integrated with github. wenever you push up, it will test your code. travis CI is 100%free for open source projects)
+  -circle ci( paul like it better than travis. 1500 mins/mon for free, he says their 2.0 system is fast, says the free tier is difficult to burn thru with many of his projects.)
+
+
+>Let's start coding
+----------
+CIRCLE CI
+----------
+-sign up
+-insights >add projects
+> go to linux >select 2.0 >say it's a Node App
+>run build
+
+go to github > project settings > toggle protect the master, require review from code, require status checks, reqruire branchs to update before merging (check off circle ci) (this will protect your code)
+
+CoverAll (in the real world, projects will ask for 50-100% coverage. they will use this tool to tell them how much code got tested. A lot of times, they just don't want to see it go down. paul says "If you add stuff, better add some test to it." He says it's prob total BS, it's not accurate.)
+For example: check coveralls.io graphql-python/graphene-django. They have 93% code coverage for every line of code.
+
+--------------------
+End To End Testing
+--------------------
+SELENIUM http://www.seleniumhq.org/
+----------
+for the front end testing, You can tell selenium to click on a button. Also available in python.
+
+----------
+WEB DRIVER http://webdriver.io/guide.html
+----------
+FOr the backend, tool called webdriver to write tests in javascript.
+
+browser tool called Kantu for Chrome. https://chrome.google.com/webstore/detail/kantu-browser-automation/gcbalfbdmfieckjlnblleoemohcganoc Add that to chrome. new test > Hit the record button > now go click around your website. It records all your interations with the site. Now go to save, and vew the json. You can use this json file as commands to give to selenium.(paul hopes in teh future that kantu will be able to output in javascript or python)
+Now we manually convert to JS/python
+hardest part:
+tell selenium what to click on
+You can give selenium CSS selectors (click the button with this name) (paul says it's fragile.)
+You can use Xpaths. go to console, right click, go to copy xpath. (paul says will break less)
+
+Really tedious stuff. In a med to large company, you will have a testing dept will do this.
+Selenium is a good way to do webscraping, if you ever need to get something quickly form a website.
+VoiceIP, this sim card was routing thru mexico and make money off it. by intercepting calls in mexico and route them to voiceip system. CEO knew the daughter of cartel. BC telephone industry is run by cartels. Paul used selenium to log into the site, get the list of sim cards, throw the report on the table which minions will refill.
+selenium lets you remotely control it.
+
+-copy circle ci commands into config.yml
+-make sure selenium has a browser docker/img. so selenium can go to browser and robo-click around for you. (go to docs > circleci-images >select node.js)
+- when things mess up in circle ci, you can go to rebuild in ssh. you can try and figure out where it went wrong.
+
+
+------------
+E2E DJANGO
+------------
+pip-save install selenium or pipenv install selenium
+-in Setup:
+from django.contrib.staticfiles.testing \
+  import StaticLiveServerTestCase
+from selenium.webdriver.chrome.webdriver import WebDriver
+class MySeleniumTests(StaticLiveServerTestCase):
+  @classmethod
+  def setUpClass(cls): //set up and teardown are built in classes. paul doesn't know why they're separated.
+    super(MySeleniumTests, cls).setUpClass()
+    cls.selenium = WebDriver()
+  @classmethod
+  def tearDownClass(cls):
+    cls.selenium.quit()
+    super(MySeleniumTests, cls).tearDownClass()
+
+---- //django will bring up dev server and selenium. 
+def test_login(self):
+  self.selenium.get(
+    '{}/graphql'.format(self.live_server_url))
+  element = self.selenium.find_element_by_xpath(
+    '/html/body/div/div[2]/div[1]/div/div[3]/a[1]')
+  self.assertEqual(element.text, 'Prettify')

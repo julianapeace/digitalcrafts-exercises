@@ -28,4 +28,4 @@ function wifi(){
     console.log(name);
   });
 }
-// wifi()
+wifi()
